@@ -6,6 +6,8 @@ first look
 
 ![screenshot_2019-01-02-21-23-12](https://user-images.githubusercontent.com/30453784/50599822-25696d80-0ed5-11e9-8875-b21357256c6e.png)
 
+![screenshot_2019-01-02-21-24-45](https://user-images.githubusercontent.com/30453784/50599937-82652380-0ed5-11e9-9935-4e18a2026d76.png)
+
 
 ## Getting Started
 
