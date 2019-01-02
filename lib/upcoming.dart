@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import 'package:movitm/detailspage.dart';
+
 
 class UpcomingMovie extends StatefulWidget {
   @override
@@ -58,11 +60,20 @@ class _MovieState extends State<UpcomingMovie> {
             child: ListView.builder(
               itemCount: data == null ? 0 : data.length ,
               itemBuilder: (BuildContext context,int index){
-                return Container(
-                  padding: EdgeInsets.only(left: 200.0,right: 0.0),
-                  height: 300.0,
-                  width: 250.0,
-                  child: Image.network("https://image.tmdb.org/t/p/w400"+data[index]['poster_path']),
+                return GestureDetector(
+                  child: Container(
+                    padding: EdgeInsets.only(left: 200.0,right: 0.0),
+                    height: 300.0,
+                    width: 250.0,
+                    child: Image.network("https://image.tmdb.org/t/p/w400"+data[index]['poster_path']),
+                  ),
+                  onTap: (){
+                    String poster = "https://image.tmdb.org/t/p/w400"+data[index]['backdrop_path'];
+                    String story = data[index]['overview'];
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            DetailsPage(poster,story)));
+                  },
                 );
               },
             ),
