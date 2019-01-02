@@ -41,33 +41,44 @@ class _MovieState extends State<Movie> {
 
   @override
   Widget build(BuildContext context) {
+    if(isdataloaed == false){
       return Scaffold(
-        body:Container(
-          height: 300.0,
-          color: Colors.redAccent,
-          margin: EdgeInsets.symmetric(vertical: 20.0),
-          child: ListView.builder(
-            itemCount: data == null ? 0 : data.length ,
-            itemBuilder: (BuildContext context,int index){
-              return GestureDetector(
-                child: Container(
-                  padding: EdgeInsets.only(left: 0.0,right: 200.0),
-                  height: 300.0,
-                  width: 250.0,
-                  child: Image.network("https://image.tmdb.org/t/p/w400"+data[index]['poster_path']),
-                ),
-                onTap: (){
-                  String poster = "https://image.tmdb.org/t/p/w400"+data[index]['backdrop_path'];
-                  String story = data[index]['overview'];
-                  String title = data[index]['title'];
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          DetailsPage(poster,story,title)));
-                },
-              );
-            },
-          ),
-        )
+        backgroundColor: Colors.white,
+        body: new Center(
+          child: CircularProgressIndicator(backgroundColor: Colors.teal,strokeWidth: 6.0,),
+        ),
       );
+    }else {
+      return Scaffold(
+          body: Container(
+            height: 300.0,
+            color: Colors.redAccent,
+            margin: EdgeInsets.symmetric(vertical: 20.0),
+            child: ListView.builder(
+              itemCount: data == null ? 0 : data.length,
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                  child: Container(
+                    padding: EdgeInsets.only(left: 0.0, right: 200.0),
+                    height: 300.0,
+                    width: 250.0,
+                    child: Image.network("https://image.tmdb.org/t/p/w400" +
+                        data[index]['poster_path']),
+                  ),
+                  onTap: () {
+                    String poster = "https://image.tmdb.org/t/p/w400" +
+                        data[index]['backdrop_path'];
+                    String story = data[index]['overview'];
+                    String title = data[index]['title'];
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            DetailsPage(poster, story, title)));
+                  },
+                );
+              },
+            ),
+          )
+      );
+    }
   }
 }
