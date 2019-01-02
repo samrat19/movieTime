@@ -1,6 +1,9 @@
 # movitm
 
-A new Flutter project.
+Using TMDB API fetching the result
+
+# introduced with Wrap Widget 
+# fetching image from internet is too easy in flutter just Image.network("your string")
 
 ## first look
 
