@@ -69,9 +69,10 @@ class _MovieState extends State<PopularMovie> {
                   onTap: (){
                     String poster = "https://image.tmdb.org/t/p/w400"+data[index]['backdrop_path'];
                     String story = data[index]['overview'];
+                    String title = data[index]['title'];
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (BuildContext context) =>
-                            DetailsPage(poster,story)));
+                            DetailsPage(poster,story,title)));
                   },
                 );
               },
