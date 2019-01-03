@@ -3,14 +3,15 @@
 Using TMDB API fetching the result
 
 # introduced with Wrap Widget 
+
 # fetching image from internet is too easy in flutter just Image.network("your image url ")
 
-## first look
 
 ![_20190103_145709](https://user-images.githubusercontent.com/30453784/50630915-83936080-0f68-11e9-9f77-d1f1756b3081.jpg)
 
 
-![screenshot_2019-01-02-21-24-45](https://user-images.githubusercontent.com/30453784/50599937-82652380-0ed5-11e9-9935-4e18a2026d76.png)
+![_20190103_174405](https://user-images.githubusercontent.com/30453784/50637337-a2512180-0f7f-11e9-8f1a-3f76b09f1a00.jpg)
+
 
 
 ## Getting Started
