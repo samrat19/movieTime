@@ -46,7 +46,7 @@ class _MyPageState extends State<MyPage> {
           ),
           Container(
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(40.0),
+              borderRadius: BorderRadius.circular(0.0),
               clipBehavior: Clip.hardEdge,
               child: Container(
                 height: 250.0,
@@ -78,7 +78,7 @@ class _MyPageState extends State<MyPage> {
           ),
           Container(
             child: ClipRRect(
-                borderRadius: BorderRadius.circular(40.0),
+                borderRadius: BorderRadius.circular(0.0),
                 clipBehavior: Clip.hardEdge,
               child: Container(
                 height: 250.0,
@@ -109,7 +109,7 @@ class _MyPageState extends State<MyPage> {
           ),
           Container(
             child: ClipRRect(
-                borderRadius: BorderRadius.circular(40.0),
+                borderRadius: BorderRadius.circular(0.0),
                 clipBehavior: Clip.hardEdge,
               child:  Container(
                 height: 250.0,
@@ -140,7 +140,7 @@ class _MyPageState extends State<MyPage> {
           ),
           Container(
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(40.0),
+              borderRadius: BorderRadius.circular(0.0),
               clipBehavior: Clip.hardEdge,
               child: Container(
                 height: 250.0,
