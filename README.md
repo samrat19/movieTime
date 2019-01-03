@@ -7,7 +7,8 @@ Using TMDB API fetching the result
 
 ## first look
 
-![_20190102_233344](https://user-images.githubusercontent.com/30453784/50605034-0673d700-0ee7-11e9-81f8-8dd542ca07b2.jpg)
+![_20190103_145709](https://user-images.githubusercontent.com/30453784/50630915-83936080-0f68-11e9-9f77-d1f1756b3081.jpg)
+
 
 ![screenshot_2019-01-02-21-24-45](https://user-images.githubusercontent.com/30453784/50599937-82652380-0ed5-11e9-9935-4e18a2026d76.png)
 
