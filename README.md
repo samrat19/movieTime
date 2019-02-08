@@ -7,10 +7,7 @@ Using TMDB API fetching the result
 # fetching image from internet is too easy in flutter just Image.network("your image url ")
 
 
-![_20190103_145709](https://user-images.githubusercontent.com/30453784/50630915-83936080-0f68-11e9-9f77-d1f1756b3081.jpg)
-
-
-![_20190103_174405](https://user-images.githubusercontent.com/30453784/50637337-a2512180-0f7f-11e9-8f1a-3f76b09f1a00.jpg)
+<img src="https://user-images.githubusercontent.com/30453784/50630915-83936080-0f68-11e9-9f77-d1f1756b3081.jpg" width = 300> <img  src="htps://user-images.githubusercontent.com/30453784/50637337-a2512180-0f7f-11e9-8f1a-3f76b09f1a00.jpg" width = 300>
 
 
 
