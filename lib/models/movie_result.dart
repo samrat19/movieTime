@@ -15,22 +15,22 @@ class MovieResult {
   String _releaseDate;
 
   MovieResult(result) {
-    _voteCount = result['voteCount'];
+    _voteCount = result['vote_count'];
     _id = result['id'];
     _video = result['video'];
     _voteAverage = result['voteAverage'];
     _title = result['title'];
     _popularity = result['popularity'];
-    _posterPath = result['posterPath'];
-    _originalLanguage = result['originalLanguage'];
-    _originalTitle = result['originalTitle'];
-    for (int i = 0; i < result['genreID'].length; i++) {
-      _genreID.add(result['genreID'][i]);
+    _posterPath = result['poster_path'];
+    _originalLanguage = result['original_language'];
+    _originalTitle = result['original_title'];
+    for (int i = 0; i < result['genre_ids'].length; i++) {
+      _genreID.add(result['genre_ids'][i]);
     }
-    _backdropPath = result['backdropPath'];
+    _backdropPath = result['backdrop_path'];
     _adult = result['adult'];
     _overview = result['overview'];
-    _releaseDate = result['releaseDate'];
+    _releaseDate = result['release_date'];
   }
 
   String get releaseDate => _releaseDate;
