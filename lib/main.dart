@@ -5,9 +5,9 @@ import 'package:movitm/toprated.dart';
 import 'package:movitm/popular.dart';
 
 
-void main() => runApp(new MaterialApp(
-  theme: new ThemeData(primarySwatch: Colors.red),
-  home: new MyPage(),
+main() => runApp(  MaterialApp(
+  theme:  ThemeData(primarySwatch: Colors.red),
+  home: MyPage(),
   debugShowCheckedModeBanner: false,
  )
 );
