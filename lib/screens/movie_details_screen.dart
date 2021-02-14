@@ -6,6 +6,7 @@ import 'package:movitm/assets/api_url.dart';
 import 'package:movitm/logic/bloc/home_screen_bloc.dart';
 import 'package:movitm/logic/bloc/movie_details_bloc.dart';
 import 'package:movitm/logic/movie_response.dart';
+import 'package:movitm/screens/cast_details_Screen.dart';
 import 'package:movitm/tools/movie_poster_widget.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
@@ -185,14 +186,26 @@ class MovieDetailsScreen extends StatelessWidget {
                                   itemBuilder: (_, index) {
                                     print(
                                         'cast index $index profile path = ${movieCast.cast[index].profilePath}');
-                                    return MovieCast(
-                                      name: movieCast.cast[index].name,
-                                      posterURL: movieCast
-                                                  .cast[index].profilePath ==
-                                              null
-                                          ? null
-                                          : ApiURL.posterBaseURL +
-                                              movieCast.cast[index].profilePath,
+                                    return GestureDetector(
+                                      onTap: (){
+                                        int id = snapshot.data.movieCast.cast[index].id;
+                                        MovieDetailsBloc()..getPerson(id);
+                                        Navigator.of(context).push(MaterialPageRoute(
+                                          builder: (_)=>CastDetailsScreen(heroTag: id,),
+                                        ));
+                                      },
+                                      child: Hero(
+                                        tag: snapshot.data.movieCast.cast[index].id,
+                                        child: MovieCast(
+                                          name: movieCast.cast[index].name,
+                                          posterURL: movieCast
+                                                      .cast[index].profilePath ==
+                                                  null
+                                              ? null
+                                              : ApiURL.posterBaseURL +
+                                                  movieCast.cast[index].profilePath,
+                                        ),
+                                      ),
                                     );
                                   },
                                 ),
@@ -338,6 +351,7 @@ class MovieCast extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.15,
             width: MediaQuery.of(context).size.width * 0.2,
             decoration: BoxDecoration(
+              color: Colors.transparent,
               shape: BoxShape.circle,
               image: DecorationImage(
                 image: NetworkImage(posterURL == null
