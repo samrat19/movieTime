@@ -12,6 +12,8 @@ class HomeScreen extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     final movies = Provider.of<HomeScreenMovieContent>(context);
+    int totalPopularPage = movies?.popular?.totalPages;
+    print(totalPopularPage.toString());
     return SafeArea(
       top: true,
       child: Scaffold(
@@ -27,179 +29,201 @@ class HomeScreen extends StatelessWidget {
           width: width,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.deepPurpleAccent,Colors.indigo[900],Colors.black],
+              colors: [
+                Colors.deepPurpleAccent,
+                Colors.indigo[900],
+                Colors.black
+              ],
               begin: Alignment(0, 1.6),
               end: Alignment(0, -1),
             ),
           ),
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Column(
-                children: [
-                  SizedBox(height: 20.0),
-                  CarouselSlider(
-                    options: CarouselOptions(
-                      aspectRatio: 16 / 9,
-                      height: height * 0.2,
-                      enableInfiniteScroll: false,
-                      initialPage: 0,
-                      autoPlay: true,
-                      pauseAutoPlayOnTouch: true,
-                      // enlargeCenterPage: true,
-                    ),
-                    items: List.generate(
-                         movies.upcomingMovies?.length,
-                        (index) => Padding(
-                              padding: const EdgeInsets.only(
-                                top: 8.0,
-                                right: 10.0,
-                                bottom: 8.0,
+          child: movies == null
+              ? Text('')
+              : SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 20.0),
+                        CarouselSlider(
+                          options: CarouselOptions(
+                            aspectRatio: 16 / 9,
+                            height: height * 0.2,
+                            enableInfiniteScroll: false,
+                            initialPage: 0,
+                            autoPlay: true,
+                            pauseAutoPlayOnTouch: true,
+                            // enlargeCenterPage: true,
+                          ),
+                          items: List.generate(
+                              movies?.upcomingMovies?.movieList?.length,
+                              (index) => Padding(
+                                    padding: const EdgeInsets.only(
+                                      top: 8.0,
+                                      right: 10.0,
+                                      bottom: 8.0,
+                                    ),
+                                    child: UpcomingMoviePosterWidget(
+                                      movie: movies
+                                          .upcomingMovies.movieList[index],
+                                    ),
+                                  )),
+                        ),
+                        SizedBox(height: 10.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Streaming Now',
+                              style: TextStyle(
+                                fontSize: 25.0,
+                                color: Colors.white,
                               ),
-                              child: UpcomingMoviePosterWidget(
-                                movie: movies.upcomingMovies[index],
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                List<MovieModel> list =
+                                    movies.popular.movieList;
+                                return Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => ViewAllScreen(
+                                      segment: ' Streaming Now',
+                                      movies: list,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'View All',
+                                style: TextStyle(
+                                    fontSize: 15.0,
+                                    color: Colors.white,
+                                    decoration: TextDecoration.underline),
                               ),
-                            )),
-                  ),
-                  SizedBox(height: 10.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Streaming Now',
-                        style: TextStyle(
-                          fontSize: 25.0,
-                          color: Colors.white,
+                            ),
+                          ],
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => ViewAllScreen(
-                              segment: ' Streaming Now',
+                        Container(
+                          height: height * 0.3,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: movies?.streamingNow?.movieList?.length,
+                            itemBuilder: (_, index) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: MoviePosterWidget(
+                                movie: movies.streamingNow.movieList[index],
+                              ),
+                            ),
+                            separatorBuilder: (_, index) => SizedBox(
+                              width: 2.0,
                             ),
                           ),
                         ),
-                        child: Text(
-                          'View All',
-                          style: TextStyle(
-                              fontSize: 15.0,
-                              color: Colors.white,
-                              decoration: TextDecoration.underline),
+                        SizedBox(height: 10.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Top Rated',
+                              style: TextStyle(
+                                fontSize: 25.0,
+                                color: Colors.white,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                List<MovieModel> list =
+                                    movies.topRated.movieList;
+                                return Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => ViewAllScreen(
+                                      segment: ' Top Rated',
+                                      movies: list,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'View All',
+                                style: TextStyle(
+                                    fontSize: 15.0,
+                                    color: Colors.white,
+                                    decoration: TextDecoration.underline),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    height: height * 0.3,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: movies.streamingNow?.length,
-                      itemBuilder: (_, index) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: MoviePosterWidget(
-                          movie: movies.streamingNow[index],
-                        ),
-                      ),
-                      separatorBuilder: (_, index) => SizedBox(
-                        width: 2.0,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Top Rated',
-                        style: TextStyle(
-                          fontSize: 25.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => ViewAllScreen(
-                              segment: ' Top Rated',
+                        Container(
+                          height: height * 0.3,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: movies?.topRated?.movieList?.length,
+                            itemBuilder: (_, index) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: MoviePosterWidget(
+                                movie: movies.topRated.movieList[index],
+                              ),
+                            ),
+                            separatorBuilder: (_, index) => SizedBox(
+                              width: 2.0,
                             ),
                           ),
                         ),
-                        child: Text(
-                          'View All',
-                          style: TextStyle(
-                              fontSize: 15.0,
-                              color: Colors.white,
-                              decoration: TextDecoration.underline),
+                        SizedBox(height: 10.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Other Popular',
+                              style: TextStyle(
+                                fontSize: 25.0,
+                                color: Colors.white,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                List<MovieModel> list =
+                                    movies.popular.movieList;
+                                return Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => ViewAllScreen(
+                                      segment: ' Popular Movies',
+                                      movies: list,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'View All',
+                                style: TextStyle(
+                                    fontSize: 15.0,
+                                    color: Colors.white,
+                                    decoration: TextDecoration.underline),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    height: height * 0.3,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: movies.topRated?.length,
-                      itemBuilder: (_, index) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: MoviePosterWidget(
-                          movie: movies.topRated[index],
-                        ),
-                      ),
-                      separatorBuilder: (_, index) => SizedBox(
-                        width: 2.0,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Other Popular',
-                        style: TextStyle(
-                          fontSize: 25.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => ViewAllScreen(
-                              segment: ' Popular Movies',
+                        Container(
+                          height: height * 0.3,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: movies?.popular?.movieList?.length,
+                            itemBuilder: (_, index) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: MoviePosterWidget(
+                                movie: movies.popular.movieList[index],
+                              ),
+                            ),
+                            separatorBuilder: (_, index) => SizedBox(
+                              width: 2.0,
                             ),
                           ),
                         ),
-                        child: Text(
-                          'View All',
-                          style: TextStyle(
-                              fontSize: 15.0,
-                              color: Colors.white,
-                              decoration: TextDecoration.underline),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    height: height * 0.3,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: movies.popular?.length,
-                      itemBuilder: (_, index) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: MoviePosterWidget(
-                          movie: movies.popular[index],
-                        ),
-                      ),
-                      separatorBuilder: (_, index) => SizedBox(
-                        width: 2.0,
-                      ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
+                ),
         ),
       ),
     );
@@ -248,7 +272,6 @@ class UpcomingMoviePosterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Container(
       width: width * 0.8,
