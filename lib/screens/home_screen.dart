@@ -27,8 +27,8 @@ class HomeScreen extends StatelessWidget {
           width: width,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.indigo[900], Colors.black],
-              begin: Alignment(0, 1.5),
+              colors: [Colors.deepPurpleAccent,Colors.indigo[900],Colors.black],
+              begin: Alignment(0, 1.6),
               end: Alignment(0, -1),
             ),
           ),
