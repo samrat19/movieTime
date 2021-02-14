@@ -48,7 +48,7 @@ class HomeScreen extends StatelessWidget {
                       // enlargeCenterPage: true,
                     ),
                     items: List.generate(
-                        movies.upcomingMovies.movieList?.length,
+                        movies.upcomingMovies.movieList == null? 0 : movies.upcomingMovies.movieList.length,
                         (index) => Padding(
                               padding: const EdgeInsets.only(
                                 top: 8.0,
@@ -220,9 +220,14 @@ class UpcomingMoviePosterWidget extends StatelessWidget {
     //double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Container(
-      color: Colors.grey,
       width: width * 0.8,
-      child: Image.network(ApiURL.posterBaseURL+posterPath),
+      decoration: BoxDecoration(
+        color: Colors.grey,
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: NetworkImage(ApiURL.posterBaseURL+posterPath)
+        ),
+      ),
     );
   }
 }
