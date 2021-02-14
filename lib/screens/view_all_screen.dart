@@ -1,9 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:movitm/assets/api_url.dart';
 
-class ViewAllScreen extends StatelessWidget {
+class ViewAllScreen extends StatefulWidget {
   final String segment;
+  final int index;
 
-  const ViewAllScreen({Key key, @required this.segment}) : super(key: key);
+  const ViewAllScreen({Key key, @required this.segment, this.index}) : super(key: key);
+
+  @override
+  _ViewAllScreenState createState() => _ViewAllScreenState();
+}
+
+class _ViewAllScreenState extends State<ViewAllScreen> {
+
+  List<String> urls = [
+    ApiURL.upcomingMovieURL,
+    ApiURL.streamingMovieURL,
+    ApiURL.topRatedMovieURL,
+    ApiURL.popularMovieURL,
+  ];
+
+  getMovies(){
+
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -36,7 +56,7 @@ class ViewAllScreen extends StatelessWidget {
                           child: Icon(Icons.arrow_back_ios_outlined,
                               color: Colors.white, size: 25)),
                       Text(
-                        segment,
+                        widget.segment,
                         style: TextStyle(
                           fontSize: 30.0,
                           color: Colors.white,

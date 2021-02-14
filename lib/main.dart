@@ -16,7 +16,6 @@ class InitApp extends StatefulWidget {
 }
 
 class _InitAppState extends State<InitApp> {
-
   @override
   void initState() {
     HomeScreenBloc().init();
@@ -33,7 +32,19 @@ class _InitAppState extends State<InitApp> {
           snapshot.hasData
               ? Provider<HomeScreenMovieContent>.value(
               value: snapshot.data, child: HomeScreen())
-              : CircularProgressIndicator(),
+              : Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.deepPurpleAccent,
+                  Colors.indigo[900],
+                  Colors.black
+                ],
+                begin: Alignment(0, 1.6),
+                end: Alignment(0, -1),
+              ),
+            ),
+          ),
         ));
   }
 }

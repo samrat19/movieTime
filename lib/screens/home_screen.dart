@@ -230,7 +230,7 @@ class MoviePosterWidget extends StatelessWidget {
             spreadRadius: 4.0,
           ),
         ],
-        color: Colors.grey,
+        color: Colors.transparent,
         image: DecorationImage(
           fit: BoxFit.contain,
           image: NetworkImage(ApiURL.posterBaseURL + movie.posterPath),
@@ -253,7 +253,7 @@ class UpcomingMoviePosterWidget extends StatelessWidget {
     return Container(
       width: width * 0.8,
       decoration: BoxDecoration(
-        color: Colors.grey,
+        color: Colors.transparent,
         image: DecorationImage(
           fit: BoxFit.cover,
           image: NetworkImage(ApiURL.posterBaseURL + movie.backdropPath),
