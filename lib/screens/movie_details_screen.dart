@@ -190,7 +190,6 @@ class MovieDetailsScreen extends StatelessWidget {
                                     return GestureDetector(
                                       onTap: (){
                                         int id = snapshot.data.movieCast.cast[index].id;
-                                        //todo
                                         MovieDetailsBloc()..getPerson(id);
                                         PersonDetailsBloc()..init(id);
                                         Navigator.of(context).push(MaterialPageRoute(

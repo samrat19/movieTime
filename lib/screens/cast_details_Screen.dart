@@ -138,8 +138,7 @@ class CastDetailsScreen extends StatelessWidget {
                                           height: height * 0.3,
                                           child: ListView.separated(
                                             scrollDirection: Axis.horizontal,
-                                            itemCount: snapshot
-                                                .data.movies.movies.length,
+                                            itemCount: snapshot.data.movies.movies.length,
                                             itemBuilder: (_, index) => Padding(
                                               padding: const EdgeInsets.all(8.0),
                                               child: MoviePosterWidget(
