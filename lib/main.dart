@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movitm/logic/bloc/home_screen_bloc.dart';
 import 'package:movitm/logic/model/movie_model.dart';
 import 'package:movitm/screens/home_screen.dart';
+import 'package:movitm/screens/movie_details_screen.dart';
 import 'package:provider/provider.dart';
 
 main() => runApp(
@@ -18,7 +19,7 @@ class InitApp extends StatefulWidget {
 class _InitAppState extends State<InitApp> {
   @override
   void initState() {
-    HomeScreenBloc().init();
+    MovieBloc().init();
     super.initState();
   }
 
@@ -27,7 +28,7 @@ class _InitAppState extends State<InitApp> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: StreamBuilder(
-          stream: HomeScreenBloc().movieStream,
+          stream: MovieBloc().movieStream,
           builder: (_, AsyncSnapshot<HomeScreenMovieContent> snapshot) =>
           snapshot.hasData
               ? Provider<HomeScreenMovieContent>.value(
