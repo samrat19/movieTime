@@ -1,12 +1,16 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:movitm/assets/api_url.dart';
+import 'package:movitm/logic/bloc/home_screen_bloc.dart';
 import 'package:movitm/screens/view_all_screen.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    final movies = Provider.of<HomeScreenMovieContent>(context);
     return SafeArea(
       top: true,
       child: Scaffold(
@@ -44,14 +48,16 @@ class HomeScreen extends StatelessWidget {
                       // enlargeCenterPage: true,
                     ),
                     items: List.generate(
-                        5,
+                        movies.upcomingMovies.movieList?.length,
                         (index) => Padding(
                               padding: const EdgeInsets.only(
                                 top: 8.0,
                                 right: 8.0,
                                 bottom: 8.0,
                               ),
-                              child: UpcomingMoviePosterWidget(),
+                              child: UpcomingMoviePosterWidget(
+                                posterPath: movies.upcomingMovies.movieList[index].posterPath,
+                              ),
                             )),
                   ),
                   SizedBox(height: 10.0),
@@ -206,6 +212,9 @@ class MoviePosterWidget extends StatelessWidget {
 }
 
 class UpcomingMoviePosterWidget extends StatelessWidget {
+  final String posterPath;
+
+  const UpcomingMoviePosterWidget({Key key, @required this.posterPath}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     //double height = MediaQuery.of(context).size.height;
@@ -213,6 +222,7 @@ class UpcomingMoviePosterWidget extends StatelessWidget {
     return Container(
       color: Colors.grey,
       width: width * 0.8,
+      child: Image.network(ApiURL.posterBaseURL+posterPath),
     );
   }
 }
