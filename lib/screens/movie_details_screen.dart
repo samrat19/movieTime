@@ -20,6 +20,16 @@ class MovieDetailsScreen extends StatelessWidget {
       body: Container(
         height: height,
         width: width,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Colors.black,
+              Colors.indigo,
+            ],
+            begin: Alignment(-1,0),
+            end: Alignment(1,1),
+          ),
+        ),
         child: StreamBuilder<MovieDetailsManager>(
             stream: MovieDetailsBloc().movieDetailsStream,
             builder: (context, AsyncSnapshot<MovieDetailsManager> snapshot) {
@@ -42,7 +52,16 @@ class MovieDetailsScreen extends StatelessWidget {
                     Expanded(
                       flex: 4,
                       child: Container(
-                        color: Colors.black,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.black,
+                              Colors.indigo,
+                            ],
+                            begin: Alignment(-1,0),
+                            end: Alignment(1,1),
+                          ),
+                        ),
                         child: SingleChildScrollView(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -269,73 +288,6 @@ class MovieDetailsScreen extends StatelessWidget {
     );
   }
 }
-
-// Center(
-// child: Container(
-// height: height*0.2,
-// width: width * 0.85,
-// color: Colors.black,
-// child: Row(
-// children: [
-// Container(
-// height: height * 0.2,
-// width: width * 0.32,
-// child: Image.network(
-// ApiURL.posterBaseURL +
-// movieDetails.posterPath,
-// fit: BoxFit.cover,
-// ),
-// ),SizedBox(width: 10.0),
-// Column(
-// crossAxisAlignment: CrossAxisAlignment.start,
-// mainAxisAlignment: MainAxisAlignment.spaceAround,
-// children: [
-// Text(
-// movieDetails.title,
-// style: TextStyle(
-// color: Colors.white,
-// fontWeight: FontWeight.bold,
-// fontSize: 25.0),
-// ),
-// RatingBar(
-// onRatingUpdate: null,
-// itemSize: 25.0,
-// unratedColor: Colors.grey.withOpacity(0.2),
-// glowColor: Colors.blueGrey,
-// initialRating: movieDetails.voteAverage/2,
-// direction: Axis.horizontal,
-// allowHalfRating: true,
-// itemCount: 5,
-// ratingWidget: RatingWidget(
-// full: Icon(Icons.star,color: Colors.grey,),
-// half: Icon(Icons.star_half,color: Colors.grey,),
-// empty: Icon(Icons.star_border_outlined,color: Colors.grey),
-// ),
-// itemPadding: EdgeInsets.symmetric(
-// horizontal: 2.0),
-// ),
-// Text('Duration: ${movieDetails.runtime} minutes',style: TextStyle(
-// color: Colors.white,
-// fontSize: 17.0
-// ),),
-// Text('Release Date: ${movieDetails.releaseDate}',style: TextStyle(
-// color: Colors.white,
-// fontSize: 17.0
-// ),),
-// Text('Budget: ${movieDetails.budget/1000000} million',style: TextStyle(
-// color: Colors.white,
-// fontSize: 17.0
-// ),),
-// Text('Revenue: ${movieDetails.revenue/1000000} million',style: TextStyle(
-// color: Colors.white,
-// fontSize: 17.0
-// ),),
-// ],
-// ),
-// ],
-// ),
-// ),
-// ),
 
 class MovieCast extends StatelessWidget {
   final String posterURL;

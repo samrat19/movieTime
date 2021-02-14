@@ -19,11 +19,20 @@ class CastDetailsScreen extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
       top: true,
-      child: Hero(
-        tag: heroTag,
-        child: Scaffold(
-          backgroundColor: Colors.black,
-          body: Stack(
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.black,
+                Colors.indigo,
+              ],
+              begin: Alignment(-1,0),
+              end: Alignment(1,1),
+            ),
+          ),
+          child: Stack(
             fit: StackFit.expand,
             children: [
               StreamBuilder<PersonModel>(
@@ -36,19 +45,22 @@ class CastDetailsScreen extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Center(
-                                    child: Container(
-                                      width: width * 0.5,
-                                      height: height * 0.3,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: NetworkImage(
-                                                ApiURL.posterBaseURL +
-                                                    snapshot.data.profilePath)),
+                                  Hero(
+                                    child: Center(
+                                      child: Container(
+                                        width: width * 0.5,
+                                        height: height * 0.3,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(
+                                                  ApiURL.posterBaseURL +
+                                                      snapshot.data.profilePath)),
+                                        ),
                                       ),
                                     ),
+                                    tag: heroTag,
                                   ),
                                   SizedBox(
                                     height: 10.0,

@@ -1,9 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movitm/assets/api_url.dart';
 import 'package:movitm/logic/bloc/home_screen_bloc.dart';
 import 'package:movitm/logic/model/movie_model.dart';
-import 'package:movitm/screens/movie_details_screen.dart';
 import 'package:movitm/screens/view_all_screen.dart';
 import 'package:movitm/tools/movie_poster_widget.dart';
 import 'package:provider/provider.dart';
@@ -11,33 +11,33 @@ import 'package:provider/provider.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var a = TimeOfDay.now();
+    var message;
+    if(a.hour>=5 && a.hour<12){
+      message = 'Morning';
+    }else if(a.hour>=12 && a.hour<22){
+      message = 'Evening';
+    }else{
+      message = 'Night';
+    }
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     final movies = Provider.of<HomeScreenMovieContent>(context);
-    int totalPopularPage = movies?.popular?.totalPages;
-    print(totalPopularPage.toString());
     return SafeArea(
       top: true,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: Text(
-            'MovieTM',
-            style: TextStyle(fontSize: 30.0),
-          ),
-        ),
         body: Container(
           height: height,
           width: width,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Colors.deepPurpleAccent,
                 Colors.indigo[900],
-                Colors.black
+                Colors.black,
+                Colors.indigo,
               ],
-              begin: Alignment(0, 1.6),
-              end: Alignment(0, -1),
+              begin: Alignment(0,-1),
+              end: Alignment(0,1),
             ),
           ),
           child: movies == null
@@ -46,8 +46,27 @@ class HomeScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(2.0),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Text(
+                          'Good $message',
+                          style: TextStyle(
+                            fontSize: 45.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         SizedBox(height: 20.0),
+                        Text(
+                          'Upcoming Movies',
+                          style: TextStyle(
+                            fontSize: 25.0,
+                            color: Colors.white,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
                         CarouselSlider(
                           options: CarouselOptions(
                             aspectRatio: 16 / 9,
@@ -72,7 +91,7 @@ class HomeScreen extends StatelessWidget {
                                     ),
                                   )),
                         ),
-                        SizedBox(height: 10.0),
+                        SizedBox(height: 20.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -106,6 +125,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
+                        SizedBox(height: 10.0),
                         Container(
                           height: height * 0.3,
                           child: ListView.separated(
@@ -122,7 +142,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10.0),
+                        SizedBox(height: 20.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -156,6 +176,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
+                        SizedBox(height: 10.0),
                         Container(
                           height: height * 0.3,
                           child: ListView.separated(
@@ -172,7 +193,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10.0),
+                        SizedBox(height: 20.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -206,6 +227,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
+                        SizedBox(height: 10.0),
                         Container(
                           height: height * 0.3,
                           child: ListView.separated(
