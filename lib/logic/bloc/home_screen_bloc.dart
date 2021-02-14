@@ -23,10 +23,10 @@ class HomeScreenBloc{
   factory HomeScreenBloc() => _singleton;
 
   HomeScreenMovieContent homeScreenMovieContent = HomeScreenMovieContent(
-    popular: null,
-    streamingNow: null,
-    topRated: null,
-    upcomingMovies: null,
+    popular: [],
+    streamingNow: [],
+    topRated: [],
+    upcomingMovies: [],
   );
 
   var _movieResponseSubject = BehaviorSubject<HomeScreenMovieContent>();
@@ -42,25 +42,25 @@ class HomeScreenBloc{
 
   addUpcomingMovies() async {
     var _movies = await getMovies(ApiURL.upcomingMovieURL);
-    homeScreenMovieContent.upcomingMovies = _movies;
+    homeScreenMovieContent.upcomingMovies = _movies.movieList;
     _movieResponseSubject.sink.add(homeScreenMovieContent);
   }
 
   addStreamingMovies() async {
     var _movies = await getMovies(ApiURL.streamingMovieURL);
-    homeScreenMovieContent.streamingNow = _movies;
+    homeScreenMovieContent.streamingNow = _movies.movieList;
     _movieResponseSubject.sink.add(homeScreenMovieContent);
   }
 
   addTopRatedMovies() async {
     var _movies = await getMovies(ApiURL.topRatedMovieURL);
-    homeScreenMovieContent.topRated = _movies;
+    homeScreenMovieContent.topRated = _movies.movieList;
     _movieResponseSubject.sink.add(homeScreenMovieContent);
   }
 
   addPopularMovies() async {
     var _movies = await getMovies(ApiURL.popularMovieURL);
-    homeScreenMovieContent.popular = _movies;
+    homeScreenMovieContent.popular = _movies.movieList;
     _movieResponseSubject.sink.add(homeScreenMovieContent);
   }
 

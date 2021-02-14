@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:movitm/logic/model/movie_model.dart';
 import 'package:movitm/logic/movie_response.dart';
 
 class HomeScreenMovieContent {
-  MovieResponse upcomingMovies, streamingNow, topRated, popular;
+  List<MovieModel> upcomingMovies, streamingNow, topRated, popular;
 
   HomeScreenMovieContent({
     @required this.upcomingMovies,

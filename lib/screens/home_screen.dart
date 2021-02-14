@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:movitm/assets/api_url.dart';
 import 'package:movitm/logic/bloc/home_screen_bloc.dart';
+import 'package:movitm/logic/model/movie_model.dart';
 import 'package:movitm/screens/view_all_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -48,15 +49,15 @@ class HomeScreen extends StatelessWidget {
                       // enlargeCenterPage: true,
                     ),
                     items: List.generate(
-                        movies.upcomingMovies.movieList == null? 0 : movies.upcomingMovies.movieList.length,
+                         movies.upcomingMovies?.length,
                         (index) => Padding(
                               padding: const EdgeInsets.only(
                                 top: 8.0,
-                                right: 8.0,
+                                right: 10.0,
                                 bottom: 8.0,
                               ),
                               child: UpcomingMoviePosterWidget(
-                                posterPath: movies.upcomingMovies.movieList[index].posterPath,
+                                movie: movies.upcomingMovies[index],
                               ),
                             )),
                   ),
@@ -93,10 +94,12 @@ class HomeScreen extends StatelessWidget {
                     height: height * 0.3,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
-                      itemCount: 5,
+                      itemCount: movies.streamingNow?.length,
                       itemBuilder: (_, index) => Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: MoviePosterWidget(),
+                        child: MoviePosterWidget(
+                          movie: movies.streamingNow[index],
+                        ),
                       ),
                       separatorBuilder: (_, index) => SizedBox(
                         width: 2.0,
@@ -136,10 +139,12 @@ class HomeScreen extends StatelessWidget {
                     height: height * 0.3,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
-                      itemCount: 5,
+                      itemCount: movies.topRated?.length,
                       itemBuilder: (_, index) => Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: MoviePosterWidget(),
+                        child: MoviePosterWidget(
+                          movie: movies.topRated[index],
+                        ),
                       ),
                       separatorBuilder: (_, index) => SizedBox(
                         width: 2.0,
@@ -179,10 +184,12 @@ class HomeScreen extends StatelessWidget {
                     height: height * 0.3,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
-                      itemCount: 5,
+                      itemCount: movies.popular?.length,
                       itemBuilder: (_, index) => Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: MoviePosterWidget(),
+                        child: MoviePosterWidget(
+                          movie: movies.popular[index],
+                        ),
                       ),
                       separatorBuilder: (_, index) => SizedBox(
                         width: 2.0,
@@ -200,24 +207,48 @@ class HomeScreen extends StatelessWidget {
 }
 
 class MoviePosterWidget extends StatelessWidget {
+  final MovieModel movie;
+
+  const MoviePosterWidget({Key key, @required this.movie}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     //double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Container(
-      color: Colors.grey,
-      width: width * 0.4,
+      width: width * 0.37,
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.indigo[900],
+            blurRadius: 6.0,
+            spreadRadius: 4.0,
+          ),
+          BoxShadow(
+            color: Colors.white,
+            blurRadius: 6.0,
+            spreadRadius: 4.0,
+          ),
+        ],
+        color: Colors.grey,
+        image: DecorationImage(
+          fit: BoxFit.contain,
+          image: NetworkImage(ApiURL.posterBaseURL + movie.posterPath),
+        ),
+      ),
     );
   }
 }
 
 class UpcomingMoviePosterWidget extends StatelessWidget {
-  final String posterPath;
+  final MovieModel movie;
 
-  const UpcomingMoviePosterWidget({Key key, @required this.posterPath}) : super(key: key);
+  const UpcomingMoviePosterWidget({Key key, @required this.movie})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    //double height = MediaQuery.of(context).size.height;
+    double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Container(
       width: width * 0.8,
@@ -225,7 +256,7 @@ class UpcomingMoviePosterWidget extends StatelessWidget {
         color: Colors.grey,
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: NetworkImage(ApiURL.posterBaseURL+posterPath)
+          image: NetworkImage(ApiURL.posterBaseURL + movie.backdropPath),
         ),
       ),
     );
