@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:movitm/nowplaying.dart';
+import 'package:movitm/screens/home_screen.dart';
 import 'package:movitm/upcoming.dart';
 import 'package:movitm/toprated.dart';
 import 'package:movitm/popular.dart';
 
-
-main() => runApp(  MaterialApp(
-  theme:  ThemeData(primarySwatch: Colors.red),
-  home: MyPage(),
-  debugShowCheckedModeBanner: false,
- )
-);
+main() => runApp(
+      MaterialApp(
+        home: HomeScreen(),
+        debugShowCheckedModeBanner: false,
+      ),
+    );
 
 class MyPage extends StatefulWidget {
   @override
@@ -21,138 +21,131 @@ class _MyPageState extends State<MyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        centerTitle: true,
-        title: Text("MovieTm"),
-      ),
-      body: ListView(
-        children: <Widget>[
-          Wrap(
-            direction: Axis.horizontal,
-            alignment: WrapAlignment.start,
-            children: <Widget>[
-              Container(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20.0),
-                  clipBehavior: Clip.hardEdge,
-                  child:    Container(
-                    color: Colors.redAccent,
-                    child: Text("  Now Playing Movie  ",style: TextStyle(fontSize: 30.0,color: Colors.white),),
-                  ),
-                ),
-              )
-            ],
-          ),
-          Container(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(0.0),
-              clipBehavior: Clip.hardEdge,
-              child: Container(
-                height: 250.0,
-                color: Colors.redAccent,
-                child: Movie(),
-              ),
-            ),
-          ),
-          Wrap(
-            direction: Axis.horizontal,
-            alignment: WrapAlignment.end,
-            children: <Widget>[
-              Container(
-                child: ClipRRect(
+        appBar: AppBar(
+          backgroundColor: Colors.blue,
+          centerTitle: true,
+          title: Text("MovieTm"),
+        ),
+        body: ListView(
+          children: <Widget>[
+            Wrap(
+              direction: Axis.horizontal,
+              alignment: WrapAlignment.start,
+              children: <Widget>[
+                Container(
+                  child: ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
                     clipBehavior: Clip.hardEdge,
-                    child:  Container(
-                    color: Colors.deepPurpleAccent,
-                    child: Text("  Upcoming Movie  ",
-                      style: TextStyle(
-                          fontSize: 30.0,
-                          color: Colors.white
+                    child: Container(
+                      color: Colors.redAccent,
+                      child: Text(
+                        "  Now Playing Movie  ",
+                        style: TextStyle(fontSize: 30.0, color: Colors.white),
                       ),
                     ),
                   ),
-                ),
-              )
-            ],
-          ),
-          Container(
-            child: ClipRRect(
+                )
+              ],
+            ),
+            Container(
+              child: ClipRRect(
                 borderRadius: BorderRadius.circular(0.0),
                 clipBehavior: Clip.hardEdge,
-              child: Container(
-                height: 250.0,
-                child: UpcomingMovie(),
+                child: Container(
+                  height: 250.0,
+                  color: Colors.redAccent,
+                  child: Movie(),
+                ),
               ),
             ),
-          ),
-          Wrap(
-            direction: Axis.horizontal,
-            alignment: WrapAlignment.center,
-            children: <Widget>[
-              Container(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20.0),
-                  clipBehavior: Clip.hardEdge,
-                  child:   Container(
-                    color: Colors.orangeAccent,
-                    child: Text("  Top rated Movie  ",
-                      style: TextStyle(
-                          fontSize: 30.0,
-                          color: Colors.white
+            Wrap(
+              direction: Axis.horizontal,
+              alignment: WrapAlignment.end,
+              children: <Widget>[
+                Container(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    clipBehavior: Clip.hardEdge,
+                    child: Container(
+                      color: Colors.deepPurpleAccent,
+                      child: Text(
+                        "  Upcoming Movie  ",
+                        style: TextStyle(fontSize: 30.0, color: Colors.white),
                       ),
                     ),
                   ),
-                ),
-              )
-            ],
-          ),
-          Container(
-            child: ClipRRect(
+                )
+              ],
+            ),
+            Container(
+              child: ClipRRect(
                 borderRadius: BorderRadius.circular(0.0),
                 clipBehavior: Clip.hardEdge,
-              child:  Container(
-                height: 250.0,
-                child: TopRatedMovie(),
+                child: Container(
+                  height: 250.0,
+                  child: UpcomingMovie(),
+                ),
               ),
             ),
-          ),
-          Wrap(
-            direction: Axis.horizontal,
-            alignment: WrapAlignment.end,
-            children: <Widget>[
-              Container(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20.0),
-                  clipBehavior: Clip.hardEdge,
-                  child:   Container(
-                    color: Colors.teal,
-                    child: Text("  Popular Movie  ",
-                      style: TextStyle(
-                          fontSize: 30.0,
-                          color: Colors.white
+            Wrap(
+              direction: Axis.horizontal,
+              alignment: WrapAlignment.center,
+              children: <Widget>[
+                Container(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    clipBehavior: Clip.hardEdge,
+                    child: Container(
+                      color: Colors.orangeAccent,
+                      child: Text(
+                        "  Top rated Movie  ",
+                        style: TextStyle(fontSize: 30.0, color: Colors.white),
                       ),
                     ),
                   ),
+                )
+              ],
+            ),
+            Container(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(0.0),
+                clipBehavior: Clip.hardEdge,
+                child: Container(
+                  height: 250.0,
+                  child: TopRatedMovie(),
                 ),
-              )
-            ],
-          ),
-          Container(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(0.0),
-              clipBehavior: Clip.hardEdge,
-              child: Container(
-                height: 250.0,
-                child: PopularMovie(),
               ),
             ),
-          )
-        ],
-      )
-    );
+            Wrap(
+              direction: Axis.horizontal,
+              alignment: WrapAlignment.end,
+              children: <Widget>[
+                Container(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    clipBehavior: Clip.hardEdge,
+                    child: Container(
+                      color: Colors.teal,
+                      child: Text(
+                        "  Popular Movie  ",
+                        style: TextStyle(fontSize: 30.0, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            Container(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(0.0),
+                clipBehavior: Clip.hardEdge,
+                child: Container(
+                  height: 250.0,
+                  child: PopularMovie(),
+                ),
+              ),
+            )
+          ],
+        ));
   }
 }
-
-
-
