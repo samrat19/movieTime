@@ -14,6 +14,7 @@ class MoviePosterWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     //double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    String imagePath = movie.posterPath == null?'https://www.pngrepo.com/download/34896/movie.png':ApiURL.posterBaseURL+movie.posterPath;
     return GestureDetector(
       onTap: (){
         MovieBloc()..getSimilarMovies(movie.id);
@@ -38,7 +39,7 @@ class MoviePosterWidget extends StatelessWidget {
           color: Colors.transparent,
           image: DecorationImage(
             fit: BoxFit.contain,
-            image: NetworkImage(ApiURL.posterBaseURL + movie.posterPath),
+            image: NetworkImage(imagePath),
           ),
         ),
       ),

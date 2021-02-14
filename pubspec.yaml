@@ -21,6 +21,7 @@ dependencies:
   rxdart:
   provider:
   flutter_rating_bar:
+  font_awesome_flutter:
 
 dev_dependencies:
   flutter_test:

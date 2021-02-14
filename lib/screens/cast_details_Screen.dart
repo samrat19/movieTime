@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:movitm/assets/api_url.dart';
 import 'package:movitm/logic/bloc/movie_details_bloc.dart';
 import 'package:movitm/logic/bloc/person/person_details_bloc.dart';
@@ -86,34 +87,8 @@ class CastDetailsScreen extends StatelessWidget {
                                     height: 10.0,
                                   ),
                                   StreamBuilder<PersonDetailsManager>(
-                                      stream:
-                                          PersonDetailsBloc().personDetailsStream,
-                                      builder: (context,
-                                          AsyncSnapshot<PersonDetailsManager>
-                                              snapshot) {
-                                        return Container(
-                                          height: height * 0.3,
-                                          child: ListView.separated(
-                                            scrollDirection: Axis.horizontal,
-                                            itemCount: snapshot
-                                                .data.images.profiles.length,
-                                            itemBuilder: (_, index) => Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Image.network(
-                                                    ApiURL.posterBaseURL +
-                                                        snapshot
-                                                            .data
-                                                            .images
-                                                            .profiles[index]
-                                                            .filePath)),
-                                            separatorBuilder: (_, index) =>
-                                                SizedBox(
-                                              width: 2.0,
-                                            ),
-                                          ),
-                                        );
-                                      }),
+                                      stream: PersonDetailsBloc().personDetailsStream,
+                                      builder: (context, AsyncSnapshot<PersonDetailsManager>snapshot) => snapshot.hasData?ImageSegment(snapShot: snapshot,):Text('')),
                                   SizedBox(
                                     height: 20.0,
                                   ),
@@ -129,69 +104,23 @@ class CastDetailsScreen extends StatelessWidget {
                                     height: 10.0,
                                   ),
                                   StreamBuilder<PersonDetailsManager>(
-                                      stream:
-                                          PersonDetailsBloc().personDetailsStream,
-                                      builder: (context,
-                                          AsyncSnapshot<PersonDetailsManager>
-                                              snapshot) {
-                                        return Container(
-                                          height: height * 0.3,
-                                          child: ListView.separated(
-                                            scrollDirection: Axis.horizontal,
-                                            itemCount: snapshot.data.movies.movies.length,
-                                            itemBuilder: (_, index) => Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: MoviePosterWidget(
-                                                movie: snapshot
-                                                    .data.movies.movies[index],
-                                              ),
-                                            ),
-                                            separatorBuilder: (_, index) =>
-                                                SizedBox(
-                                              width: 2.0,
-                                            ),
-                                          ),
-                                        );
-                                      }),
+                                      stream: PersonDetailsBloc().personDetailsStream,
+                                      builder: (context, AsyncSnapshot<PersonDetailsManager>snapshot) => snapshot.hasData ? MovieSegment(snapShot: snapshot,) : Text('')),
+                                  SizedBox(
+                                    height: 20.0,
+                                  ),
+                                  Center(
+                                    child: Text(
+                                      'Available on',
+                                      style: TextStyle(
+                                        fontSize: 30.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
                                   StreamBuilder<PersonDetailsManager>(
-                                      stream:
-                                          PersonDetailsBloc().personDetailsStream,
-                                      builder: (context,
-                                          AsyncSnapshot<PersonDetailsManager>
-                                              snapshot) {
-                                        return Container(
-                                          height: 20.0,
-                                          child: ListView(
-                                            shrinkWrap: true,
-                                            scrollDirection: Axis.horizontal,
-                                            physics:
-                                                NeverScrollableScrollPhysics(),
-                                            children: [
-                                              Text(
-                                                snapshot.data.links.facebookId == null ? 'fb'
-                                                    : snapshot
-                                                        .data.links.facebookId,
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                              Text(
-                                                snapshot.data.links.instagramId == null ? 'insta'
-                                                    : snapshot
-                                                    .data.links.instagramId,
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                              Text(
-                                                snapshot.data.links.twitterId == null ? 'tw'
-                                                    : snapshot
-                                                    .data.links.twitterId,
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              )
-                                            ],
-                                          ),
-                                        );
-                                      }),
+                                      stream: PersonDetailsBloc().personDetailsStream,
+                                      builder: (context, AsyncSnapshot<PersonDetailsManager> snapshot) => SocialMediaSegment(snapShot: snapshot,)),
                                 ],
                               ),
                             ),
@@ -213,3 +142,88 @@ class CastDetailsScreen extends StatelessWidget {
     );
   }
 }
+
+class ImageSegment extends StatelessWidget {
+
+  final AsyncSnapshot<PersonDetailsManager> snapShot;
+
+  const ImageSegment({Key key, @required this.snapShot}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    return Container(
+      height: height * 0.3,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: snapShot.data.images.profiles.length,
+        itemBuilder: (_, index) {
+          var imagePath = ApiURL.posterBaseURL + snapShot.data.images.profiles[index].filePath;
+          return Padding(
+            padding:
+            const EdgeInsets.all(8.0),
+            child: Image.network(imagePath));
+        },
+        separatorBuilder: (_, index) => SizedBox(width: 2.0),
+      ),
+    );
+  }
+}
+
+class MovieSegment extends StatelessWidget {
+  final AsyncSnapshot<PersonDetailsManager> snapShot;
+
+  const MovieSegment({Key key, @required this.snapShot}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    return Container(
+      height: height * 0.3,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: snapShot.data.movies.movies.length,
+        itemBuilder: (_, index) {
+          print(snapShot.data.movies.movies[index].posterPath);
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: MoviePosterWidget(
+              movie: snapShot.data.movies.movies[index],
+            ),
+          );
+        },
+        separatorBuilder: (_, index) => SizedBox(width: 2.0),
+      ),
+    );
+  }
+}
+
+
+class SocialMediaSegment extends StatelessWidget {
+  final AsyncSnapshot<PersonDetailsManager> snapShot;
+
+  const SocialMediaSegment({Key key, @required this.snapShot}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    return Container(
+      height: height*0.1,
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Icon(FontAwesomeIcons.facebook, color: Colors.white,
+              size: width*0.1,),
+            Icon(FontAwesomeIcons.instagram, color: Colors.white,
+              size: width*0.1,),
+            Icon(FontAwesomeIcons.twitter, color: Colors.white,
+              size: width*0.1,),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
