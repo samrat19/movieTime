@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movitm/assets/api_url.dart';
 import 'package:movitm/logic/bloc/home_screen_bloc.dart';
+import 'package:movitm/logic/bloc/movie_details_bloc.dart';
 import 'package:movitm/logic/model/movie_model.dart';
 import 'package:movitm/screens/movie_details_screen.dart';
 
@@ -16,7 +17,8 @@ class MoviePosterWidget extends StatelessWidget {
     return GestureDetector(
       onTap: (){
         MovieBloc()..getSimilarMovies(movie.id);
-        return Navigator.of(context).push(MaterialPageRoute(builder: (_)=>MovieDetailsScreen(movie: movie)));
+        MovieDetailsBloc()..init(movie.id);
+        return Navigator.of(context).push(MaterialPageRoute(builder: (_)=>MovieDetailsScreen()));
       },
       child: Container(
         width: width * 0.37,
