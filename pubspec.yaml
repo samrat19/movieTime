@@ -20,6 +20,7 @@ dependencies:
   carousel_slider:
   rxdart:
   provider:
+  flutter_rating_bar:
 
 dev_dependencies:
   flutter_test:
