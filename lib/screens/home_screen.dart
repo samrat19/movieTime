@@ -116,6 +116,7 @@ class HomeScreen extends StatelessWidget {
                                     builder: (_) => ViewAllScreen(
                                       segment: ' Streaming Now',
                                       movies: list,
+                                      totalPage: movies.streamingNow.totalPages,
                                     ),
                                   ),
                                 );

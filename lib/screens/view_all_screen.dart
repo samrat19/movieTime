@@ -1,68 +1,70 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movitm/assets/api_url.dart';
 import 'package:movitm/logic/model/movie_model.dart';
+import 'package:movitm/logic/movie_response.dart';
+import 'package:http/http.dart' as http;
 
-class ViewAllScreen extends StatelessWidget {
+class ViewAllScreen extends StatefulWidget {
   final String segment;
   final List<MovieModel> movies;
+  final int totalPage;
 
-  const ViewAllScreen({Key key, @required this.segment, @required this.movies})
+  const ViewAllScreen({Key key, @required this.segment, @required this.movies, this.totalPage})
       : super(key: key);
 
-//   @override
-//   _ViewAllScreenState createState() => _ViewAllScreenState();
-// }
-//
-// class _ViewAllScreenState extends State<ViewAllScreen> {
-//
-//   @override
-//   void initState() {
-//     this.fetch();
-//     super.initState();
-//     _scrollController.addListener(() {
-//       if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
-//         fetch();
-//       }
-//     });
-//   }
-//
-//   List<MovieModel> movies = [];
-//   ScrollController _scrollController = ScrollController();
-//   String message = 'Loading';
-//
-//   final List<String> urls = [
-//     ApiURL.upcomingMovieURL,
-//     ApiURL.streamingMovieURL,
-//     ApiURL.topRatedMovieURL,
-//     ApiURL.popularMovieURL,
-//   ];
-//
-//
-//   void getMovies(int page) async {
-//     try{
-//       var response = await http
-//           .get('https://api.themoviedb.org/3/movie/popular?api_key=e151ccdde6fbf9ea2d84c67dfb0a920c&language=en-US&page=$page',);
-//       print(response.statusCode.toString());
-//       var result = MovieResponse.fromJson(json.decode(response.body));
-//       setState(() {
-//         for( var movie in result.movieList){
-//           movies.add(movie);
-//         }
-//         print(result.movieList.length);
-//       });
-//     } on HandshakeException{
-//       setState(() {
-//         message = 'Connection Timed out';
-//       });
-//     }
-//   }
-//
-//   fetch(){
-//     for(int page = 1; page<widget.totalPage; page++){
-//       this.getMovies(page);
-//     }
-//   }
+  @override
+  _ViewAllScreenState createState() => _ViewAllScreenState();
+}
+
+class _ViewAllScreenState extends State<ViewAllScreen> {
+  ScrollController controller = ScrollController();
+  bool scrolling = false;
+  bool loading = false;
+
+  @override
+  void initState() {
+    print(widget.movies.length.toString());
+    // controller = ScrollController(initialScrollOffset: 0.0);
+    controller.addListener(() {
+      if (controller.position.pixels ==
+          controller.position.maxScrollExtent) {
+        if(widget.totalPage >= 2 ){
+          fetchMovies();
+        }
+      }
+    });
+    super.initState();
+  }
+
+  fetchMovies(){
+    for(int i = 2 ; i<widget.totalPage ; i++){
+      fetchMoreMovies(i);
+    }
+  }
+
+  fetchMoreMovies(int page) async {
+
+    setState(() {
+      loading = true;
+    });
+
+    String url = 'https://api.themoviedb.org/3/movie/popular?api_key=e151ccdde6fbf9ea2d84c67dfb0a920c&language=en-US&page=$page';
+    var response = await http
+        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+
+    var fetched =  MovieResponse.fromJson(json.decode(response.body)).movieList;
+
+    setState((){
+      loading = false;
+     // await Future.delayed(Duration(seconds: 2));
+      widget.movies.addAll(fetched);
+      print(widget.movies.length.toString());
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +79,7 @@ class ViewAllScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(4.0),
             child: SingleChildScrollView(
+              controller: controller,
               child: Column(
                 children: [
                   SizedBox(
@@ -85,12 +88,12 @@ class ViewAllScreen extends StatelessWidget {
                   Row(
                     children: [
                       GestureDetector(
-                          onTap: () => Navigator.pop(context),
-                          child: Icon(Icons.arrow_back_ios_outlined,
-                              color: Colors.blueGrey[900], size: 25),
+                        onTap: () => Navigator.pop(context),
+                        child: Icon(Icons.arrow_back_ios_outlined,
+                            color: Colors.blueGrey[900], size: 25),
                       ),
                       Text(
-                        segment,
+                        widget.segment,
                         style: TextStyle(
                           fontSize: 30.0,
                           color: Colors.blueGrey[900],
@@ -101,17 +104,19 @@ class ViewAllScreen extends StatelessWidget {
                   SizedBox(
                     height: 20.0,
                   ),
-                  Wrap(
+                  loading?CupertinoActivityIndicator():Wrap(
                     runSpacing: 10,
                     direction: Axis.horizontal,
                     children: List.generate(
-                        20,
-                        (index) => Padding(
+                        widget.movies.length+1,
+                        (index) {
+                          return index == widget.movies.length?CupertinoActivityIndicator():Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: ViewAllMoviePosterWidget(
-                                movie: movies[index],
+                                movie: widget.movies[index],
                               ),
-                            )),
+                            );
+                        }),
                   ),
                 ],
               ),
@@ -132,6 +137,7 @@ class ViewAllMoviePosterWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    String imagePath = movie.posterPath == null?'https://www.pngrepo.com/download/34896/movie.png':ApiURL.posterBaseURL+movie.posterPath;
     return Card(
       elevation: 2,
       margin: EdgeInsets.all(0),
@@ -141,7 +147,7 @@ class ViewAllMoviePosterWidget extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.contain,
-            image: NetworkImage(ApiURL.posterBaseURL + movie.posterPath),
+            image: NetworkImage(imagePath),
           ),
         ),
       ),
