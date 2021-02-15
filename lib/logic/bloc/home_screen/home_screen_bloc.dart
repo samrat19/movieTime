@@ -71,7 +71,7 @@ class MovieBloc{
   }
 
   getSimilarMovies(int movieID)async{
-    var url = 'https://api.themoviedb.org/3/movie/$movieID/similar?api_key=e151ccdde6fbf9ea2d84c67dfb0a920c&language=en-US&page=1';
+    var url = 'https://api.themoviedb.org/3/movie/$movieID/similar${ApiURL.apiKey}&language=en-US&page=1';
     var response = await getMovies(url);
     _similarMovieSubject.sink.add(response);
   }

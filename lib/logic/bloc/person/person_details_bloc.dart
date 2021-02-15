@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:movitm/assets/api_url.dart';
 import 'package:movitm/logic/model/person/person_image_model.dart';
 import 'package:movitm/logic/model/person/person_link_model.dart';
 import 'package:movitm/logic/model/person/person_movie_model.dart';
@@ -52,19 +53,19 @@ class PersonDetailsBloc{
   }
 
   addMovieDetails(int personID) async {
-    var _movies = await getPersonMovie('https://api.themoviedb.org/3/person/$personID/movie_credits?api_key=e151ccdde6fbf9ea2d84c67dfb0a920c&language=en-US');
+    var _movies = await getPersonMovie('https://api.themoviedb.org/3/person/$personID/movie_credits${ApiURL.apiKey}&language=en-US');
     personManager.movies = _movies;
     _personDetailsSubject.sink.add(personManager);
   }
 
   addPersonLink(int personID) async {
-    var _links = await getPersonLink('https://api.themoviedb.org/3/person/$personID/external_ids?api_key=e151ccdde6fbf9ea2d84c67dfb0a920c&language=en-US');
+    var _links = await getPersonLink('https://api.themoviedb.org/3/person/$personID/external_ids${ApiURL.apiKey}&language=en-US');
     personManager.links = _links;
     _personDetailsSubject.sink.add(personManager);
   }
 
   addPersonImages(int personID) async {
-    var _images = await getPersonImages('https://api.themoviedb.org/3/person/$personID/images?api_key=e151ccdde6fbf9ea2d84c67dfb0a920c');
+    var _images = await getPersonImages('https://api.themoviedb.org/3/person/$personID/images${ApiURL.apiKey}');
     personManager.images = _images;
     _personDetailsSubject.sink.add(personManager);
   }
