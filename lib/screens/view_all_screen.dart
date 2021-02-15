@@ -11,9 +11,15 @@ class ViewAllScreen extends StatefulWidget {
   final String segment;
   final List<MovieModel> movies;
   final int totalPage;
+  final String url;
 
-  const ViewAllScreen({Key key, @required this.segment, @required this.movies, this.totalPage})
-      : super(key: key);
+  const ViewAllScreen({
+    Key key,
+    @required this.segment,
+    @required this.movies,
+    @required this.totalPage,
+    @required this.url,
+  }) : super(key: key);
 
   @override
   _ViewAllScreenState createState() => _ViewAllScreenState();
@@ -23,15 +29,15 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
   ScrollController controller = ScrollController();
   bool scrolling = false;
   bool loading = false;
+  int currentPage = 2;
 
   @override
   void initState() {
-    print(widget.movies.length.toString());
+    print(widget.totalPage.toString());
     // controller = ScrollController(initialScrollOffset: 0.0);
     controller.addListener(() {
-      if (controller.position.pixels ==
-          controller.position.maxScrollExtent) {
-        if(widget.totalPage >= 2 ){
+      if (controller.position.pixels == controller.position.maxScrollExtent) {
+        if (widget.totalPage >= 2) {
           fetchMovies();
         }
       }
@@ -39,32 +45,26 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
     super.initState();
   }
 
-  fetchMovies(){
-    for(int i = 2 ; i<widget.totalPage ; i++){
-      fetchMoreMovies(i);
-    }
+  fetchMovies() {
+    currentPage = widget.totalPage - (widget.totalPage - currentPage);
+    fetchMoreMovies(currentPage);
   }
 
   fetchMoreMovies(int page) async {
-
-    setState(() {
-      loading = true;
-    });
-
-    String url = 'https://api.themoviedb.org/3/movie/popular?api_key=e151ccdde6fbf9ea2d84c67dfb0a920c&language=en-US&page=$page';
+    String url = '${widget.url}$page';
+    print(url);
     var response = await http
         .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
 
-    var fetched =  MovieResponse.fromJson(json.decode(response.body)).movieList;
+    var fetched = MovieResponse.fromJson(json.decode(response.body)).movieList;
 
-    setState((){
-      loading = false;
-     // await Future.delayed(Duration(seconds: 2));
+    setState(() {
+      // await Future.delayed(Duration(seconds: 2));
       widget.movies.addAll(fetched);
       print(widget.movies.length.toString());
+      currentPage++;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -104,19 +104,19 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
                   SizedBox(
                     height: 20.0,
                   ),
-                  loading?CupertinoActivityIndicator():Wrap(
+                  Wrap(
                     runSpacing: 10,
                     direction: Axis.horizontal,
-                    children: List.generate(
-                        widget.movies.length+1,
-                        (index) {
-                          return index == widget.movies.length?CupertinoActivityIndicator():Padding(
+                    children: List.generate(widget.movies.length + 1, (index) {
+                      return index == widget.movies.length
+                          ? CupertinoActivityIndicator()
+                          : Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: ViewAllMoviePosterWidget(
                                 movie: widget.movies[index],
                               ),
                             );
-                        }),
+                    }),
                   ),
                 ],
               ),
@@ -137,7 +137,9 @@ class ViewAllMoviePosterWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    String imagePath = movie.posterPath == null?'https://www.pngrepo.com/download/34896/movie.png':ApiURL.posterBaseURL+movie.posterPath;
+    String imagePath = movie.posterPath == null
+        ? 'https://www.pngrepo.com/download/34896/movie.png'
+        : ApiURL.posterBaseURL + movie.posterPath;
     return Card(
       elevation: 2,
       margin: EdgeInsets.all(0),

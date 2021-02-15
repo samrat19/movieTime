@@ -117,6 +117,7 @@ class HomeScreen extends StatelessWidget {
                                       segment: ' Streaming Now',
                                       movies: list,
                                       totalPage: movies.streamingNow.totalPages,
+                                      url: ApiURL.paginationNowPlayingURL,
                                     ),
                                   ),
                                 );
@@ -167,6 +168,8 @@ class HomeScreen extends StatelessWidget {
                                     builder: (_) => ViewAllScreen(
                                       segment: ' Top Rated',
                                       movies: list,
+                                      url: ApiURL.paginationTopRatedURL,
+                                      totalPage: movies.topRated.totalPages,
                                     ),
                                   ),
                                 );
@@ -217,6 +220,8 @@ class HomeScreen extends StatelessWidget {
                                     builder: (_) => ViewAllScreen(
                                       segment: ' Popular Movies',
                                       movies: list,
+                                      url: ApiURL.paginationPopularURL,
+                                      totalPage: movies.popular.totalPages,
                                     ),
                                   ),
                                 );
