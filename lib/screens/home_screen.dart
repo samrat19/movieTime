@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
                         Text(
                           'Good $message',
                           style: TextStyle(
-                            fontSize: 45.0,
+                            fontSize: width*0.15,
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
@@ -54,7 +54,7 @@ class HomeScreen extends StatelessWidget {
                         Text(
                           'Upcoming Movies',
                           style: TextStyle(
-                            fontSize: 25.0,
+                            fontSize: width*0.07,
                             color: Colors.blueGrey,
                           ),
                         ),
@@ -105,7 +105,7 @@ class HomeScreen extends StatelessWidget {
                             Text(
                               'Streaming Now',
                               style: TextStyle(
-                                fontSize: 25.0,
+                                fontSize: width*0.07,
                                 color: Colors.blueGrey,
                               ),
                             ),
@@ -127,7 +127,7 @@ class HomeScreen extends StatelessWidget {
                               child: Text(
                                 'View All',
                                 style: TextStyle(
-                                    fontSize: 15.0,
+                                    fontSize: width*0.04,
                                     color: Colors.blueGrey,
                                     decoration: TextDecoration.underline),
                               ),
@@ -157,7 +157,7 @@ class HomeScreen extends StatelessWidget {
                             Text(
                               'Top Rated',
                               style: TextStyle(
-                                fontSize: 25.0,
+                                fontSize: width*0.07,
                                 color: Colors.blueGrey,
                               ),
                             ),
@@ -179,7 +179,7 @@ class HomeScreen extends StatelessWidget {
                               child: Text(
                                 'View All',
                                 style: TextStyle(
-                                    fontSize: 15.0,
+                                    fontSize: width*0.04,
                                     color: Colors.blueGrey,
                                     decoration: TextDecoration.underline),
                               ),
@@ -209,7 +209,7 @@ class HomeScreen extends StatelessWidget {
                             Text(
                               'Other Popular',
                               style: TextStyle(
-                                fontSize: 25.0,
+                                fontSize: width*0.07,
                                 color: Colors.blueGrey,
                               ),
                             ),
@@ -231,7 +231,7 @@ class HomeScreen extends StatelessWidget {
                               child: Text(
                                 'View All',
                                 style: TextStyle(
-                                    fontSize: 15.0,
+                                    fontSize: width*0.04,
                                     color: Colors.blueGrey,
                                     decoration: TextDecoration.underline),
                               ),
@@ -295,7 +295,7 @@ class MovieSection extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return Container(
-      height: height * 0.3,
+      height: height * 0.36,
       foregroundDecoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [

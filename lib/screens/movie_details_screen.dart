@@ -121,6 +121,9 @@ class MovieDetailsScreen extends StatelessWidget {
                                           )
                                         ],
                                       ),
+                                      SizedBox(
+                                        height: 4.0,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -143,7 +146,7 @@ class MovieDetailsScreen extends StatelessWidget {
                                     Text(
                                       'Overview',
                                       style: TextStyle(
-                                        fontSize: 30.0,
+                                        fontSize: width*0.09,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -154,7 +157,7 @@ class MovieDetailsScreen extends StatelessWidget {
                                     Text(
                                       movieDetails.overview,
                                       style: TextStyle(
-                                        fontSize: 15.0,
+                                        fontSize: width*0.04,
                                         color: Colors.black,
                                       ),
                                     ),
@@ -164,7 +167,7 @@ class MovieDetailsScreen extends StatelessWidget {
                                     Text(
                                       'Genre',
                                       style: TextStyle(
-                                        fontSize: 30.0,
+                                        fontSize: width*0.09,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -194,7 +197,7 @@ class MovieDetailsScreen extends StatelessWidget {
                                                   e.name,
                                                   style: TextStyle(
                                                       color: Colors.white,
-                                                      fontSize: 20.0),
+                                                      fontSize: width*0.05,),
                                                 ),
                                               ),
                                             ),
@@ -207,7 +210,7 @@ class MovieDetailsScreen extends StatelessWidget {
                                     Text(
                                       'MovieCast',
                                       style: TextStyle(
-                                        fontSize: 30.0,
+                                        fontSize: width*0.09,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -226,8 +229,7 @@ class MovieDetailsScreen extends StatelessWidget {
                                         scrollDirection: Axis.horizontal,
                                         itemCount: movieCast.cast.length,
                                         itemBuilder: (_, index) {
-                                          print(
-                                              'cast index $index profile path = ${movieCast.cast[index].profilePath}');
+                                          print('cast index $index profile path = ${movieCast.cast[index].profilePath}');
                                           return GestureDetector(
                                             onTap: () {
                                               int id = snapshot.data.movieCast

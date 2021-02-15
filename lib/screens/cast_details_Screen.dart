@@ -181,6 +181,9 @@ class CastDetailsScreen extends StatelessWidget {
                                 StreamBuilder<PersonDetailsManager>(
                                     stream: PersonDetailsBloc().personDetailsStream,
                                     builder: (context, AsyncSnapshot<PersonDetailsManager> snapshot) => SocialMediaSegment(snapShot: snapshot,)),
+                              SizedBox(
+                                height: 10.0,
+                              ),
                               ],
                             ),
                           )

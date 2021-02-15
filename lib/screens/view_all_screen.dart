@@ -99,7 +99,7 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
                       Text(
                         widget.segment,
                         style: TextStyle(
-                          fontSize: 30.0,
+                          fontSize: width*0.09,
                           color: Colors.blueGrey[900],
                         ),
                       ),
@@ -150,17 +150,14 @@ class ViewAllMoviePosterWidget extends StatelessWidget {
         MovieDetailsBloc()..init(movie.id);
         return Navigator.of(context).push(MaterialPageRoute(builder: (_)=>MovieDetailsScreen()));
       },
-      child: Card(
-        elevation: 2,
-        margin: EdgeInsets.all(0),
-        child: Container(
-          width: width * 0.3,
-          height: height * 0.2,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.contain,
-              image: NetworkImage(imagePath),
-            ),
+      child: Container(
+        width: width * 0.3,
+        height: height * 0.26,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(12.0)),
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: NetworkImage(imagePath),
           ),
         ),
       ),
