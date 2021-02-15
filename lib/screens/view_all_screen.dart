@@ -8,6 +8,7 @@ import 'package:movitm/logic/bloc/movie_details/movie_details_bloc.dart';
 import 'package:movitm/logic/model/movie_model.dart';
 import 'package:movitm/logic/movie_response.dart';
 import 'package:http/http.dart' as http;
+import 'package:movitm/tools/movie_poster_widget.dart';
 
 import 'movie_details_screen.dart';
 
@@ -116,8 +117,10 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
                           ? CupertinoActivityIndicator()
                           : Padding(
                               padding: const EdgeInsets.all(4.0),
-                              child: ViewAllMoviePosterWidget(
+                              child: MoviePosterWidget(
                                 movie: widget.movies[index],
+                                height: height*0.26,
+                               viewAll: true,
                               ),
                             );
                     }),

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'file:///D:/My_Programs/Android_Learning/movieTime/lib/logic/bloc/home_screen/home_screen_bloc.dart';
-import 'package:movitm/logic/model/movie_model.dart';
 import 'package:movitm/screens/home_screen.dart';
-import 'package:movitm/screens/movie_details_screen.dart';
 import 'package:provider/provider.dart';
+
+import 'logic/bloc/home_screen/home_screen_bloc.dart';
 
 main() => runApp(
       MaterialApp(

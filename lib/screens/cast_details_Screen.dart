@@ -240,7 +240,7 @@ class MovieSegment extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return Container(
-      height: height * 0.3,
+      height: height * 0.35,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: snapShot.data.movies.movies.length,

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:movitm/assets/api_url.dart';
+import 'package:movitm/logic/bloc/home_screen/home_screen_bloc.dart';
 import 'package:movitm/logic/bloc/movie_details/movie_details_bloc.dart';
 import 'package:movitm/logic/bloc/person/person_details_bloc.dart';
+import 'package:movitm/logic/movie_response.dart';
 import 'package:movitm/screens/cast_details_Screen.dart';
+import 'package:movitm/tools/movie_poster_widget.dart';
+
+import 'home_screen.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
   @override
@@ -262,44 +267,44 @@ class MovieDetailsScreen extends StatelessWidget {
                                     SizedBox(
                                       height: 20.0,
                                     ),
-                                    // Text(
-                                    //   'Similar Movies',
-                                    //   style: TextStyle(
-                                    //     fontSize: 30.0,
-                                    //     color: Colors.black,
-                                    //     fontWeight: FontWeight.bold,
-                                    //   ),
-                                    // ),
-                                    // SizedBox(
-                                    //   height: 10.0,
-                                    // ),
-                                    // StreamBuilder<MovieResponse>(
-                                    //   stream: MovieBloc().similarMovie,
-                                    //   builder:
-                                    //       (_, AsyncSnapshot<MovieResponse> snapShot) {
-                                    //     return snapShot.hasData
-                                    //         ? MovieSection(
-                                    //             child: ListView.separated(
-                                    //               scrollDirection: Axis.horizontal,
-                                    //               itemCount:
-                                    //                   snapShot.data.movieList.length,
-                                    //               itemBuilder: (_, index) => Padding(
-                                    //                 padding:
-                                    //                     const EdgeInsets.all(8.0),
-                                    //                 child: MoviePosterWidget(
-                                    //                   movie: snapShot
-                                    //                       .data.movieList[index],
-                                    //                 ),
-                                    //               ),
-                                    //               separatorBuilder: (_, index) =>
-                                    //                   SizedBox(
-                                    //                 width: 2.0,
-                                    //               ),
-                                    //             ),
-                                    //           )
-                                    //         : CircularProgressIndicator();
-                                    //   },
-                                    // ),
+                                    Text(
+                                      'Similar Movies',
+                                      style: TextStyle(
+                                        fontSize: 30.0,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10.0,
+                                    ),
+                                    StreamBuilder<MovieResponse>(
+                                      stream: MovieBloc().similarMovie,
+                                      builder:
+                                          (_, AsyncSnapshot<MovieResponse> snapShot) {
+                                        return snapShot.hasData
+                                            ? MovieSection(
+                                                child: ListView.separated(
+                                                  scrollDirection: Axis.horizontal,
+                                                  itemCount:
+                                                      snapShot.data.movieList.length,
+                                                  itemBuilder: (_, index) => Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(8.0),
+                                                    child: MoviePosterWidget(
+                                                      movie: snapShot
+                                                          .data.movieList[index],
+                                                    ),
+                                                  ),
+                                                  separatorBuilder: (_, index) =>
+                                                      SizedBox(
+                                                    width: 2.0,
+                                                  ),
+                                                ),
+                                              )
+                                            : CircularProgressIndicator();
+                                      },
+                                    ),
                                   ],
                                 ),
                               ),
