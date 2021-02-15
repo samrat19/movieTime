@@ -15,8 +15,10 @@ class HomeScreen extends StatelessWidget {
     var message;
     if(a.hour>=5 && a.hour<12){
       message = 'Morning';
-    }else if(a.hour>=12 && a.hour<22){
-      message = 'Evening';
+    }else if(a.hour>=12 && a.hour<17){
+      message = 'Afternoon';
+    }else if(a.hour>=17 && a.hour<21){
+      message = 'Afternoon';
     }else{
       message = 'Night';
     }
