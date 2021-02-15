@@ -20,16 +20,16 @@ class CastDetailsScreen extends StatelessWidget {
     return SafeArea(
       top: true,
       child: Scaffold(
-        backgroundColor: Colors.black,
         body: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Colors.black,
-                Colors.indigo,
+                Colors.transparent,
+                Colors.grey.withOpacity(0.2),
+                Colors.white,
               ],
-              begin: Alignment(-1,0),
-              end: Alignment(1,1),
+              begin: Alignment(0,-1),
+              end: Alignment(1,0),
             ),
           ),
           child: Stack(
@@ -40,101 +40,139 @@ class CastDetailsScreen extends StatelessWidget {
                   builder: (context, AsyncSnapshot<PersonModel> snapshot) {
                     return snapshot.hasData
                         ? SingleChildScrollView(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal:8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Hero(
-                                    child: Center(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Stack(
+                                  children: [
+                                    Hero(
                                       child: Container(
-                                        width: width * 0.5,
-                                        height: height * 0.3,
+                                        width: width,
+                                        height: height*0.8,
                                         decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
                                           image: DecorationImage(
                                               fit: BoxFit.cover,
                                               image: NetworkImage(
                                                   ApiURL.posterBaseURL +
-                                                      snapshot.data.profilePath)),
+                                                      snapshot.data.profilePath,
+                                              ),
+                                          ),
+                                        ),
+                                        foregroundDecoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Colors.transparent,
+                                              Colors.grey.withOpacity(0.2),
+                                              Colors.white,
+                                            ],
+                                            begin: Alignment(0,-1),
+                                            end: Alignment(0,1),
+                                          ),
                                         ),
                                       ),
+                                      tag: heroTag,
                                     ),
-                                    tag: heroTag,
-                                  ),
-                                  SizedBox(
-                                    height: 10.0,
-                                  ),
-                                  Center(
-                                    child: Text(
-                                      snapshot.data.name,
-                                      style: TextStyle(
-                                        fontSize: 30.0,
-                                        color: Colors.white,
+                                    Positioned(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              snapshot.data.name,
+                                              style: TextStyle(
+                                                fontSize: 60.0,
+                                                color: Colors.blueGrey[700],
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  'Popularity',
+                                                  style: TextStyle(
+                                                    fontSize: 30.0,
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 10.0,),
+                                                Text(
+                                                  snapshot.data.popularity.toString(),
+                                                  style: TextStyle(
+                                                    fontSize: 30.0,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                        ),
                                       ),
+                                      bottom: 20.0,
                                     ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                Text(
+                                  snapshot.data.biography,
+                                  style: TextStyle(
+                                    fontSize: 17.0,
+                                    color: Colors.black,
                                   ),
-                                  SizedBox(
-                                    height: 20.0,
+                                ),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                Text(
+                                  'Other Images',
+                                  style: TextStyle(
+                                    fontSize: 30.0,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  Text(
-                                    snapshot.data.biography,
-                                    style: TextStyle(
-                                      fontSize: 17.0,
-                                      color: Colors.white,
-                                    ),
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                StreamBuilder<PersonDetailsManager>(
+                                    stream: PersonDetailsBloc().personDetailsStream,
+                                    builder: (context, AsyncSnapshot<PersonDetailsManager>snapshot) => snapshot.hasData?ImageSegment(snapShot: snapshot,):Text('')),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                Text(
+                                  'Movies',
+                                  style: TextStyle(
+                                    fontSize: 30.0,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  SizedBox(
-                                    height: 20.0,
-                                  ),
-                                  Text(
-                                    'Other Images',
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                StreamBuilder<PersonDetailsManager>(
+                                    stream: PersonDetailsBloc().personDetailsStream,
+                                    builder: (context, AsyncSnapshot<PersonDetailsManager>snapshot) => snapshot.hasData ? MovieSegment(snapShot: snapshot,) : Text('')),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                Center(
+                                  child: Text(
+                                    'Available on',
                                     style: TextStyle(
                                       fontSize: 30.0,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 10.0,
-                                  ),
-                                  StreamBuilder<PersonDetailsManager>(
-                                      stream: PersonDetailsBloc().personDetailsStream,
-                                      builder: (context, AsyncSnapshot<PersonDetailsManager>snapshot) => snapshot.hasData?ImageSegment(snapShot: snapshot,):Text('')),
-                                  SizedBox(
-                                    height: 20.0,
-                                  ),
-                                  Text(
-                                    'Movies',
-                                    style: TextStyle(
-                                      fontSize: 30.0,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10.0,
-                                  ),
-                                  StreamBuilder<PersonDetailsManager>(
-                                      stream: PersonDetailsBloc().personDetailsStream,
-                                      builder: (context, AsyncSnapshot<PersonDetailsManager>snapshot) => snapshot.hasData ? MovieSegment(snapShot: snapshot,) : Text('')),
-                                  SizedBox(
-                                    height: 20.0,
-                                  ),
-                                  Center(
-                                    child: Text(
-                                      'Available on',
-                                      style: TextStyle(
-                                        fontSize: 30.0,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                  StreamBuilder<PersonDetailsManager>(
-                                      stream: PersonDetailsBloc().personDetailsStream,
-                                      builder: (context, AsyncSnapshot<PersonDetailsManager> snapshot) => SocialMediaSegment(snapShot: snapshot,)),
-                                ],
-                              ),
+                                ),
+                                StreamBuilder<PersonDetailsManager>(
+                                    stream: PersonDetailsBloc().personDetailsStream,
+                                    builder: (context, AsyncSnapshot<PersonDetailsManager> snapshot) => SocialMediaSegment(snapShot: snapshot,)),
+                              ],
                             ),
                           )
                         : CupertinoActivityIndicator();
@@ -224,11 +262,11 @@ class SocialMediaSegment extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Icon(FontAwesomeIcons.facebook, color: Colors.white,
+            Icon(FontAwesomeIcons.facebook, color: Colors.black,
               size: width*0.1,),
-            Icon(FontAwesomeIcons.instagram, color: Colors.white,
+            Icon(FontAwesomeIcons.instagram, color: Colors.black,
               size: width*0.1,),
-            Icon(FontAwesomeIcons.twitter, color: Colors.white,
+            Icon(FontAwesomeIcons.twitter, color: Colors.black,
               size: width*0.1,),
           ],
         ),
