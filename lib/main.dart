@@ -30,26 +30,19 @@ class _InitAppState extends State<InitApp> {
       statusBarIconBrightness: Brightness.dark,
     ));
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: StreamBuilder(
-          stream: MovieBloc().movieStream,
-          builder: (_, AsyncSnapshot<HomeScreenMovieContent> snapshot) =>
-          snapshot.hasData
-              ? Provider<HomeScreenMovieContent>.value(
-              value: snapshot.data, child: HomeScreen())
-              : Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Colors.deepPurpleAccent,
-                  Colors.indigo[900],
-                  Colors.black
-                ],
-                begin: Alignment(0, 1.6),
-                end: Alignment(0, -1),
-              ),
-            ),
-          ),
-        ));
+      debugShowCheckedModeBanner: false,
+      home: StreamBuilder(
+        stream: MovieBloc().movieStream,
+        builder: (_, AsyncSnapshot<HomeScreenMovieContent> snapshot) =>
+            snapshot.hasData
+                ? Provider<HomeScreenMovieContent>.value(
+                    value: snapshot.data, child: HomeScreen())
+                : Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                    ),
+                  ),
+      ),
+    );
   }
 }
