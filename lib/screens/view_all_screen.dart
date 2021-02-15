@@ -74,13 +74,6 @@ class ViewAllScreen extends StatelessWidget {
         body: Container(
           height: height,
           width: width,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.indigo[900], Colors.black],
-              begin: Alignment(0, 1.5),
-              end: Alignment(0, -1),
-            ),
-          ),
           child: Padding(
             padding: const EdgeInsets.all(4.0),
             child: SingleChildScrollView(
@@ -94,12 +87,12 @@ class ViewAllScreen extends StatelessWidget {
                       GestureDetector(
                           onTap: () => Navigator.pop(context),
                           child: Icon(Icons.arrow_back_ios_outlined,
-                              color: Colors.white, size: 25)),
+                              color: Colors.blueGrey[900], size: 25)),
                       Text(
                         segment,
                         style: TextStyle(
                           fontSize: 30.0,
-                          color: Colors.white,
+                          color: Colors.blueGrey[900],
                         ),
                       ),
                     ],
@@ -108,6 +101,7 @@ class ViewAllScreen extends StatelessWidget {
                     height: 20.0,
                   ),
                   Wrap(
+                    runSpacing: 10,
                     direction: Axis.horizontal,
                     children: List.generate(
                         20,
@@ -137,21 +131,17 @@ class ViewAllMoviePosterWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return Container(
-      width: width * 0.3,
-      height: height * 0.2,
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.indigo[900],
-            blurRadius: 0.4,
-            spreadRadius: 0.1,
+    return Card(
+      elevation: 2,
+      margin: EdgeInsets.all(0),
+      child: Container(
+        width: width * 0.3,
+        height: height * 0.2,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.contain,
+            image: NetworkImage(ApiURL.posterBaseURL + movie.posterPath),
           ),
-        ],
-        color: Colors.transparent,
-        image: DecorationImage(
-          fit: BoxFit.contain,
-          image: NetworkImage(ApiURL.posterBaseURL + movie.posterPath),
         ),
       ),
     );
