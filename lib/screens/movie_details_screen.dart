@@ -164,6 +164,7 @@ class MovieDetailsScreen extends StatelessWidget {
                                 ),
                                 Wrap(
                                   spacing: 10.0,
+                                  runSpacing: 10.0,
                                   direction: Axis.horizontal,
                                   children: movieDetails.genres
                                       .map(
