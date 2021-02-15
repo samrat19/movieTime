@@ -87,7 +87,8 @@ class ViewAllScreen extends StatelessWidget {
                       GestureDetector(
                           onTap: () => Navigator.pop(context),
                           child: Icon(Icons.arrow_back_ios_outlined,
-                              color: Colors.blueGrey[900], size: 25)),
+                              color: Colors.blueGrey[900], size: 25),
+                      ),
                       Text(
                         segment,
                         style: TextStyle(
