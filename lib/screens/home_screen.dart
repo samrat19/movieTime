@@ -15,10 +15,10 @@ class HomeScreen extends StatelessWidget {
     var message;
     if(a.hour>=5 && a.hour<12){
       message = 'Morning';
-    }else if(a.hour>=12 && a.hour<17){
+    }else if(a.hour>=12 && a.hour<16){
       message = 'Afternoon';
     }else if(a.hour>=17 && a.hour<21){
-      message = 'Afternoon';
+      message = 'Evening';
     }else{
       message = 'Night';
     }
@@ -42,10 +42,13 @@ class HomeScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        SizedBox(
+                          height: 20,
+                        ),
                         Text(
                           'Good $message',
                           style: TextStyle(
-                            fontSize: width*0.15,
+                            fontSize: width*0.17,
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
