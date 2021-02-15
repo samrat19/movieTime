@@ -36,7 +36,7 @@ class MoviePosterWidget extends StatelessWidget {
             color: Colors.transparent,
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
             image: DecorationImage(
-              fit: BoxFit.contain,
+              fit: BoxFit.cover,
               image: NetworkImage(imagePath),
             ),
           ),
