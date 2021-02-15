@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:movitm/assets/api_url.dart';
-import 'package:movitm/logic/bloc/movie_details_bloc.dart';
+import 'package:movitm/logic/bloc/movie_details/movie_details_bloc.dart';
 import 'package:movitm/logic/bloc/person/person_details_bloc.dart';
 import 'package:movitm/logic/model/person_model.dart';
 import 'package:movitm/tools/movie_poster_widget.dart';

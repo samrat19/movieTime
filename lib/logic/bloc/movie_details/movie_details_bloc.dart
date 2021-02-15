@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:movitm/logic/bloc/movie_details_manager.dart';
 import 'package:movitm/logic/model/movie_cast_model.dart';
 import 'package:movitm/logic/model/movie_details_model.dart';
 import 'package:movitm/logic/model/person_model.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:http/http.dart' as http;
+
+import 'movie_details_manager.dart';
 export 'movie_details_manager.dart';
 
 

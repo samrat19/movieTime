@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:movitm/assets/api_url.dart';
-import 'package:movitm/logic/bloc/home_screen_bloc.dart';
-import 'package:movitm/logic/bloc/movie_details_bloc.dart';
+import 'package:movitm/logic/bloc/movie_details/movie_details_bloc.dart';
 import 'package:movitm/logic/bloc/person/person_details_bloc.dart';
-import 'package:movitm/logic/movie_response.dart';
 import 'package:movitm/screens/cast_details_Screen.dart';
-import 'package:movitm/screens/home_screen.dart';
-import 'package:movitm/tools/movie_poster_widget.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
   @override

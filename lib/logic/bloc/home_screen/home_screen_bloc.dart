@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:movitm/assets/api_url.dart';
-import 'package:movitm/logic/model/home_screen_movie_content.dart';
+import 'home_screen_movie_content.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:http/http.dart' as http;
-import '../movie_response.dart';
-export 'package:movitm/logic/model/home_screen_movie_content.dart';
+import '../../movie_response.dart';
+export 'home_screen_movie_content.dart';
 
 
 Future<MovieResponse> getMovies(String url) async {

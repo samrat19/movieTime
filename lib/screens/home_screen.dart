@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movitm/assets/api_url.dart';
-import 'package:movitm/logic/bloc/home_screen_bloc.dart';
+import 'package:movitm/logic/bloc/home_screen/home_screen_bloc.dart';
 import 'package:movitm/logic/model/movie_model.dart';
 import 'package:movitm/screens/view_all_screen.dart';
 import 'package:movitm/tools/movie_poster_widget.dart';
