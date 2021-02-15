@@ -80,7 +80,7 @@ class CastDetailsScreen extends StatelessWidget {
                                             Text(
                                               snapshot.data.name,
                                               style: TextStyle(
-                                                fontSize: snapshot.data.name.length>14?width*0.08:width*0.15,
+                                                fontSize: snapshot.data.name.length>12?width*0.12:width*0.15,
                                                 color: Colors.blueGrey[700],
                                                 fontWeight: FontWeight.bold,
                                               ),
