@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movitm/assets/api_url.dart';
 import 'package:movitm/logic/bloc/home_screen_bloc.dart';
@@ -21,25 +22,23 @@ class MoviePosterWidget extends StatelessWidget {
         MovieDetailsBloc()..init(movie.id);
         return Navigator.of(context).push(MaterialPageRoute(builder: (_)=>MovieDetailsScreen()));
       },
-      child: Container(
-        width: width * 0.37,
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.indigo[900],
-              blurRadius: 6.0,
-              spreadRadius: 4.0,
+      child: Card(
+        elevation: 10,
+        clipBehavior: Clip.hardEdge,
+        shadowColor: Colors.blueGrey[900],
+        margin: EdgeInsets.all(4.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+        ),
+        child: Container(
+          width: width * 0.37,
+          decoration: BoxDecoration(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            image: DecorationImage(
+              fit: BoxFit.contain,
+              image: NetworkImage(imagePath),
             ),
-            BoxShadow(
-              color: Colors.white,
-              blurRadius: 6.0,
-              spreadRadius: 4.0,
-            ),
-          ],
-          color: Colors.transparent,
-          image: DecorationImage(
-            fit: BoxFit.contain,
-            image: NetworkImage(imagePath),
           ),
         ),
       ),

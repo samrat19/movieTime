@@ -30,21 +30,13 @@ class HomeScreen extends StatelessWidget {
           height: height,
           width: width,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.indigo[900],
-                Colors.black,
-                Colors.indigo,
-              ],
-              begin: Alignment(0,-1),
-              end: Alignment(0,1),
-            ),
+            color: Colors.white,
           ),
           child: movies == null
               ? Text('')
               : SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.all(2.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 6.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -52,7 +44,7 @@ class HomeScreen extends StatelessWidget {
                           'Good $message',
                           style: TextStyle(
                             fontSize: 45.0,
-                            color: Colors.white,
+                            color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -61,35 +53,48 @@ class HomeScreen extends StatelessWidget {
                           'Upcoming Movies',
                           style: TextStyle(
                             fontSize: 25.0,
-                            color: Colors.white,
+                            color: Colors.blueGrey,
                           ),
                         ),
                         SizedBox(
                           height: 10.0,
                         ),
-                        CarouselSlider(
-                          options: CarouselOptions(
-                            aspectRatio: 16 / 9,
-                            height: height * 0.2,
-                            enableInfiniteScroll: false,
-                            initialPage: 0,
-                            autoPlay: true,
-                            pauseAutoPlayOnTouch: true,
-                            // enlargeCenterPage: true,
+                        Container(
+                          foregroundDecoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.transparent,
+                                Colors.grey.withOpacity(0.4),
+                                Colors.white,
+                              ],
+                              begin: Alignment(0, -1),
+                              end: Alignment(0,1),
+                            ),
                           ),
-                          items: List.generate(
-                              movies?.upcomingMovies?.movieList?.length,
-                              (index) => Padding(
-                                    padding: const EdgeInsets.only(
-                                      top: 8.0,
-                                      right: 10.0,
-                                      bottom: 8.0,
-                                    ),
-                                    child: UpcomingMoviePosterWidget(
-                                      movie: movies
-                                          .upcomingMovies.movieList[index],
-                                    ),
-                                  )),
+                          child: CarouselSlider(
+                            options: CarouselOptions(
+                              aspectRatio: 16 / 9,
+                              height: height * 0.25,
+                              enableInfiniteScroll: false,
+                              initialPage: 0,
+                              autoPlay: true,
+                              pauseAutoPlayOnTouch: true,
+                              // enlargeCenterPage: true,
+                            ),
+                            items: List.generate(
+                                movies?.upcomingMovies?.movieList?.length,
+                                (index) => Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: 8.0,
+                                        right: 10.0,
+                                        bottom: 8.0,
+                                      ),
+                                      child: UpcomingMoviePosterWidget(
+                                        movie: movies
+                                            .upcomingMovies.movieList[index],
+                                      ),
+                                    )),
+                          ),
                         ),
                         SizedBox(height: 20.0),
                         Row(
@@ -99,7 +104,7 @@ class HomeScreen extends StatelessWidget {
                               'Streaming Now',
                               style: TextStyle(
                                 fontSize: 25.0,
-                                color: Colors.white,
+                                color: Colors.blueGrey,
                               ),
                             ),
                             GestureDetector(
@@ -119,15 +124,14 @@ class HomeScreen extends StatelessWidget {
                                 'View All',
                                 style: TextStyle(
                                     fontSize: 15.0,
-                                    color: Colors.white,
+                                    color: Colors.blueGrey,
                                     decoration: TextDecoration.underline),
                               ),
                             ),
                           ],
                         ),
                         SizedBox(height: 10.0),
-                        Container(
-                          height: height * 0.3,
+                        MovieSection(
                           child: ListView.separated(
                             scrollDirection: Axis.horizontal,
                             itemCount: movies?.streamingNow?.movieList?.length,
@@ -150,7 +154,7 @@ class HomeScreen extends StatelessWidget {
                               'Top Rated',
                               style: TextStyle(
                                 fontSize: 25.0,
-                                color: Colors.white,
+                                color: Colors.blueGrey,
                               ),
                             ),
                             GestureDetector(
@@ -170,15 +174,14 @@ class HomeScreen extends StatelessWidget {
                                 'View All',
                                 style: TextStyle(
                                     fontSize: 15.0,
-                                    color: Colors.white,
+                                    color: Colors.blueGrey,
                                     decoration: TextDecoration.underline),
                               ),
                             ),
                           ],
                         ),
                         SizedBox(height: 10.0),
-                        Container(
-                          height: height * 0.3,
+                        MovieSection(
                           child: ListView.separated(
                             scrollDirection: Axis.horizontal,
                             itemCount: movies?.topRated?.movieList?.length,
@@ -201,7 +204,7 @@ class HomeScreen extends StatelessWidget {
                               'Other Popular',
                               style: TextStyle(
                                 fontSize: 25.0,
-                                color: Colors.white,
+                                color: Colors.blueGrey,
                               ),
                             ),
                             GestureDetector(
@@ -221,15 +224,14 @@ class HomeScreen extends StatelessWidget {
                                 'View All',
                                 style: TextStyle(
                                     fontSize: 15.0,
-                                    color: Colors.white,
+                                    color: Colors.blueGrey,
                                     decoration: TextDecoration.underline),
                               ),
                             ),
                           ],
                         ),
                         SizedBox(height: 10.0),
-                        Container(
-                          height: height * 0.3,
+                        MovieSection(
                           child: ListView.separated(
                             scrollDirection: Axis.horizontal,
                             itemCount: movies?.popular?.movieList?.length,
@@ -272,6 +274,32 @@ class UpcomingMoviePosterWidget extends StatelessWidget {
           image: NetworkImage(ApiURL.posterBaseURL + movie.backdropPath),
         ),
       ),
+    );
+  }
+}
+
+class MovieSection extends StatelessWidget {
+
+  final Widget child;
+
+  const MovieSection({Key key, @required this.child}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    return Container(
+      height: height * 0.3,
+      foregroundDecoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Colors.transparent,
+            Colors.grey.withOpacity(0.2),
+            Colors.white,
+          ],
+          begin: Alignment(0, -1),
+          end: Alignment(0,1),
+        ),
+      ),
+      child: child,
     );
   }
 }

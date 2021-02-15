@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:movitm/logic/bloc/home_screen_bloc.dart';
 import 'package:movitm/logic/model/movie_model.dart';
 import 'package:movitm/screens/home_screen.dart';
@@ -25,6 +26,10 @@ class _InitAppState extends State<InitApp> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.white,
+      statusBarIconBrightness: Brightness.dark,
+    ));
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: StreamBuilder(
