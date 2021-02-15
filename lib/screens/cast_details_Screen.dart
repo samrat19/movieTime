@@ -80,7 +80,7 @@ class CastDetailsScreen extends StatelessWidget {
                                             Text(
                                               snapshot.data.name,
                                               style: TextStyle(
-                                                fontSize: 50.0,
+                                                fontSize: snapshot.data.name.length>14?width*0.08:width*0.15,
                                                 color: Colors.blueGrey[700],
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -116,22 +116,28 @@ class CastDetailsScreen extends StatelessWidget {
                                 SizedBox(
                                   height: 10.0,
                                 ),
-                                Text(
-                                  snapshot.data.biography,
-                                  style: TextStyle(
-                                    fontSize: 17.0,
-                                    color: Colors.black,
+                                Padding(
+                                  padding: const EdgeInsets.only(left:8.0),
+                                  child: Text(
+                                    snapshot.data.biography,
+                                    style: TextStyle(
+                                      fontSize: 17.0,
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
                                   height: 20.0,
                                 ),
-                                Text(
-                                  'Other Images',
-                                  style: TextStyle(
-                                    fontSize: 30.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
+                                Padding(
+                                  padding: const EdgeInsets.only(left:8.0),
+                                  child: Text(
+                                    'Other Images',
+                                    style: TextStyle(
+                                      fontSize: 30.0,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
@@ -143,12 +149,15 @@ class CastDetailsScreen extends StatelessWidget {
                                 SizedBox(
                                   height: 20.0,
                                 ),
-                                Text(
-                                  'Movies',
-                                  style: TextStyle(
-                                    fontSize: 30.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
+                                Padding(
+                                  padding: const EdgeInsets.only(left:8.0),
+                                  child: Text(
+                                    'Movies',
+                                    style: TextStyle(
+                                      fontSize: 30.0,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
