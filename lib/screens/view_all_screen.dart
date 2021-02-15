@@ -151,7 +151,9 @@ class ViewAllMoviePosterWidget extends StatelessWidget {
       onTap: (){
         MovieBloc()..getSimilarMovies(movie.id);
         MovieDetailsBloc()..init(movie.id);
-        return Navigator.of(context).push(MaterialPageRoute(builder: (_)=>MovieDetailsScreen()));
+        return Navigator.of(context).push(MaterialPageRoute(builder: (_)=>MovieDetailsScreen(
+          id: movie.id,
+        )));
       },
       child: Container(
         width: width * 0.3,

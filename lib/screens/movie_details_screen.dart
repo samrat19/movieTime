@@ -4,13 +4,33 @@ import 'package:movitm/assets/api_url.dart';
 import 'package:movitm/logic/bloc/home_screen/home_screen_bloc.dart';
 import 'package:movitm/logic/bloc/movie_details/movie_details_bloc.dart';
 import 'package:movitm/logic/bloc/person/person_details_bloc.dart';
+import 'package:movitm/logic/model/movie_model.dart';
 import 'package:movitm/logic/movie_response.dart';
 import 'package:movitm/screens/cast_details_Screen.dart';
-import 'package:movitm/tools/movie_poster_widget.dart';
 
-import 'home_screen.dart';
 
-class MovieDetailsScreen extends StatelessWidget {
+class MovieDetailsScreen extends StatefulWidget {
+
+  final int id;
+
+  const MovieDetailsScreen({Key key, @required this.id}) : super(key: key);
+
+  @override
+  _MovieDetailsScreenState createState() => _MovieDetailsScreenState();
+}
+
+class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
+
+  List<int> movieID = [];
+
+  @override
+  void initState() {
+    setState(() {
+      movieID.add(widget.id);
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -29,7 +49,7 @@ class MovieDetailsScreen extends StatelessWidget {
                   stream: MovieDetailsBloc().movieDetailsStream,
                   builder: (context, AsyncSnapshot<MovieDetailsManager> snapshot) {
                     if (snapshot.hasData) {
-                      print(snapshot.data.movieDetails.toString());
+                      //print(snapshot.data.movieDetails.toString());
                       var movieDetails = snapshot.data.movieDetails;
                       var movieCast = snapshot.data.movieCast;
                       String posterPath = snapshot.data.movieDetails.backdropPath == null?'https://www.pngrepo.com/download/34896/movie.png':ApiURL.posterBaseURL +
@@ -230,7 +250,7 @@ class MovieDetailsScreen extends StatelessWidget {
                                         scrollDirection: Axis.horizontal,
                                         itemCount: movieCast.cast.length,
                                         itemBuilder: (_, index) {
-                                          print('cast index $index profile path = ${movieCast.cast[index].profilePath}');
+                                          //print('cast index $index profile path = ${movieCast.cast[index].profilePath}');
                                           return GestureDetector(
                                             onTap: () {
                                               int id = snapshot.data.movieCast
@@ -283,7 +303,19 @@ class MovieDetailsScreen extends StatelessWidget {
                                       builder:
                                           (_, AsyncSnapshot<MovieResponse> snapShot) {
                                         return snapShot.hasData
-                                            ? MovieSection(
+                                            ? Container(
+                                          height: height * 0.3,
+                                          foregroundDecoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              colors: [
+                                                Colors.transparent,
+                                                Colors.grey.withOpacity(0.2),
+                                                Colors.white,
+                                              ],
+                                              begin: Alignment(0, -1),
+                                              end: Alignment(0,1),
+                                            ),
+                                          ),
                                                 child: ListView.separated(
                                                   scrollDirection: Axis.horizontal,
                                                   itemCount:
@@ -291,15 +323,12 @@ class MovieDetailsScreen extends StatelessWidget {
                                                   itemBuilder: (_, index) => Padding(
                                                     padding:
                                                         const EdgeInsets.all(8.0),
-                                                    child: MoviePosterWidget(
-                                                      movie: snapShot
-                                                          .data.movieList[index],
-                                                    ),
+                                                    child: poster(context, snapShot.data.movieList[index])
                                                   ),
                                                   separatorBuilder: (_, index) =>
                                                       SizedBox(
-                                                    width: 2.0,
-                                                  ),
+                                                    width: 2.0
+                                                  )
                                                 ),
                                               )
                                             : CircularProgressIndicator();
@@ -321,12 +350,54 @@ class MovieDetailsScreen extends StatelessWidget {
               top: 10,
               left: 10,
               child: GestureDetector(
-                onTap: () => Navigator.pop(context),
+                onTap: () {
+                  //list null then pop otherwise load last id
+                  //check for item in list
+                  if(movieID.length <=1){
+                    Navigator.pop(context);
+                  }else{
+                    setState(() {
+                      movieID.removeLast();
+                      print(movieID.length.toString());
+                    });
+                    var id = movieID[movieID.length-1];
+                    MovieBloc()..getSimilarMovies(id);
+                    MovieDetailsBloc()..init(id);
+                  }
+                },
                 child: Icon(Icons.arrow_back_ios_outlined,
                     color: Colors.grey[200]),
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget poster(BuildContext context, MovieModel movie) {
+
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    String imagePath = movie.posterPath == null?'https://www.pngrepo.com/download/34896/movie.png':ApiURL.posterBaseURL+movie.posterPath;
+    return GestureDetector(
+      onTap: (){
+        setState(() {
+          movieID.add(movie.id);
+          print(movieID.length.toString());
+        });
+        MovieBloc()..getSimilarMovies(movie.id);
+        MovieDetailsBloc()..init(movie.id);
+      },
+      child: Container(
+        width: width*0.37,
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: NetworkImage(imagePath),
+          ),
         ),
       ),
     );

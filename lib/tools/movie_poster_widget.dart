@@ -22,7 +22,7 @@ class MoviePosterWidget extends StatelessWidget {
         if(movie.id != null){
           MovieBloc()..getSimilarMovies(movie.id);
           MovieDetailsBloc()..init(movie.id);
-          return Navigator.of(context).push(MaterialPageRoute(builder: (_)=>MovieDetailsScreen())).then((value){
+          return Navigator.of(context).push(MaterialPageRoute(builder: (_)=>MovieDetailsScreen(id: movie.id,))).then((value){
             MovieBloc()..getSimilarMovies(movie.id);
             MovieDetailsBloc()..init(movie.id);
           });
