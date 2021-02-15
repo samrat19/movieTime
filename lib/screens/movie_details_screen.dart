@@ -28,9 +28,11 @@ class MovieDetailsScreen extends StatelessWidget {
                   stream: MovieDetailsBloc().movieDetailsStream,
                   builder: (context, AsyncSnapshot<MovieDetailsManager> snapshot) {
                     if (snapshot.hasData) {
-                      print(snapshot.data.movieDetails.id.toString());
+                      print(snapshot.data.movieDetails.toString());
                       var movieDetails = snapshot.data.movieDetails;
                       var movieCast = snapshot.data.movieCast;
+                      String posterPath = snapshot.data.movieDetails.backdropPath == null?'https://www.pngrepo.com/download/34896/movie.png':ApiURL.posterBaseURL +
+                          movieDetails.backdropPath;
                       return Column(
                         children: [
                           Expanded(
@@ -46,19 +48,21 @@ class MovieDetailsScreen extends StatelessWidget {
                                         Colors.transparent,
                                       ],
                                       begin: Alignment(0, 1),
-                                      end: Alignment(0,-1),
+                                      end: Alignment(0, -1),
                                     ),
                                   ),
                                   decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: NetworkImage(ApiURL.posterBaseURL +
-                                              movieDetails.backdropPath))),
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(posterPath),
+                                    ),
+                                  ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       Text(
@@ -95,7 +99,8 @@ class MovieDetailsScreen extends StatelessWidget {
                                             width: 5.0,
                                           ),
                                           RatingBar(
-                                            initialRating: movieDetails.voteAverage,
+                                            initialRating:
+                                                movieDetails.voteAverage,
                                             ratingWidget: RatingWidget(
                                               full: Icon(
                                                 Icons.star,
@@ -132,7 +137,9 @@ class MovieDetailsScreen extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    SizedBox(height: 20.0,),
+                                    SizedBox(
+                                      height: 20.0,
+                                    ),
                                     Text(
                                       'Overview',
                                       style: TextStyle(
@@ -174,13 +181,20 @@ class MovieDetailsScreen extends StatelessWidget {
                                             (e) => Container(
                                               decoration: BoxDecoration(
                                                 color: Colors.blueGrey,
-                                                borderRadius: BorderRadius.all(Radius.circular(10.0),),
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(10.0),
+                                                ),
                                               ),
                                               child: Padding(
-                                                padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 4.0),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10.0,
+                                                        vertical: 4.0),
                                                 child: Text(
                                                   e.name,
-                                                  style: TextStyle(color: Colors.white,fontSize: 20.0),
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 20.0),
                                                 ),
                                               ),
                                             ),
@@ -205,7 +219,8 @@ class MovieDetailsScreen extends StatelessWidget {
                                       height: height * 0.2,
                                       width: width,
                                       child: ListView.separated(
-                                        separatorBuilder: (_, index) => SizedBox(
+                                        separatorBuilder: (_, index) =>
+                                            SizedBox(
                                           width: 10.0,
                                         ),
                                         scrollDirection: Axis.horizontal,
@@ -214,24 +229,32 @@ class MovieDetailsScreen extends StatelessWidget {
                                           print(
                                               'cast index $index profile path = ${movieCast.cast[index].profilePath}');
                                           return GestureDetector(
-                                            onTap: (){
-                                              int id = snapshot.data.movieCast.cast[index].id;
+                                            onTap: () {
+                                              int id = snapshot.data.movieCast
+                                                  .cast[index].id;
                                               MovieDetailsBloc()..getPerson(id);
                                               PersonDetailsBloc()..init(id);
-                                              Navigator.of(context).push(MaterialPageRoute(
-                                                builder: (_)=>CastDetailsScreen(heroTag: id,),
+                                              Navigator.of(context)
+                                                  .push(MaterialPageRoute(
+                                                builder: (_) =>
+                                                    CastDetailsScreen(
+                                                  heroTag: id,
+                                                ),
                                               ));
                                             },
                                             child: Hero(
-                                              tag: snapshot.data.movieCast.cast[index].id,
+                                              tag: snapshot.data.movieCast
+                                                  .cast[index].id,
                                               child: MovieCast(
-                                                name: movieCast.cast[index].name,
-                                                posterURL: movieCast
-                                                            .cast[index].profilePath ==
+                                                name:
+                                                    movieCast.cast[index].name,
+                                                posterURL: movieCast.cast[index]
+                                                            .profilePath ==
                                                         null
                                                     ? null
                                                     : ApiURL.posterBaseURL +
-                                                        movieCast.cast[index].profilePath,
+                                                        movieCast.cast[index]
+                                                            .profilePath,
                                               ),
                                             ),
                                           );
@@ -241,44 +264,44 @@ class MovieDetailsScreen extends StatelessWidget {
                                     SizedBox(
                                       height: 20.0,
                                     ),
-                                    Text(
-                                      'Similar Movies',
-                                      style: TextStyle(
-                                        fontSize: 30.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10.0,
-                                    ),
-                                    StreamBuilder<MovieResponse>(
-                                      stream: MovieBloc().similarMovie,
-                                      builder:
-                                          (_, AsyncSnapshot<MovieResponse> snapShot) {
-                                        return snapShot.hasData
-                                            ? MovieSection(
-                                                child: ListView.separated(
-                                                  scrollDirection: Axis.horizontal,
-                                                  itemCount:
-                                                      snapShot.data.movieList.length,
-                                                  itemBuilder: (_, index) => Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(8.0),
-                                                    child: MoviePosterWidget(
-                                                      movie: snapShot
-                                                          .data.movieList[index],
-                                                    ),
-                                                  ),
-                                                  separatorBuilder: (_, index) =>
-                                                      SizedBox(
-                                                    width: 2.0,
-                                                  ),
-                                                ),
-                                              )
-                                            : CircularProgressIndicator();
-                                      },
-                                    ),
+                                    // Text(
+                                    //   'Similar Movies',
+                                    //   style: TextStyle(
+                                    //     fontSize: 30.0,
+                                    //     color: Colors.black,
+                                    //     fontWeight: FontWeight.bold,
+                                    //   ),
+                                    // ),
+                                    // SizedBox(
+                                    //   height: 10.0,
+                                    // ),
+                                    // StreamBuilder<MovieResponse>(
+                                    //   stream: MovieBloc().similarMovie,
+                                    //   builder:
+                                    //       (_, AsyncSnapshot<MovieResponse> snapShot) {
+                                    //     return snapShot.hasData
+                                    //         ? MovieSection(
+                                    //             child: ListView.separated(
+                                    //               scrollDirection: Axis.horizontal,
+                                    //               itemCount:
+                                    //                   snapShot.data.movieList.length,
+                                    //               itemBuilder: (_, index) => Padding(
+                                    //                 padding:
+                                    //                     const EdgeInsets.all(8.0),
+                                    //                 child: MoviePosterWidget(
+                                    //                   movie: snapShot
+                                    //                       .data.movieList[index],
+                                    //                 ),
+                                    //               ),
+                                    //               separatorBuilder: (_, index) =>
+                                    //                   SizedBox(
+                                    //                 width: 2.0,
+                                    //               ),
+                                    //             ),
+                                    //           )
+                                    //         : CircularProgressIndicator();
+                                    //   },
+                                    // ),
                                   ],
                                 ),
                               ),
@@ -295,9 +318,9 @@ class MovieDetailsScreen extends StatelessWidget {
               top: 10,
               left: 10,
               child: GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Icon(Icons.arrow_back_ios_outlined,
-                      color: Colors.grey[200]),
+                onTap: () => Navigator.pop(context),
+                child: Icon(Icons.arrow_back_ios_outlined,
+                    color: Colors.grey[200]),
               ),
             ),
           ],

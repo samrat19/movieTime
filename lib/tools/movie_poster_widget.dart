@@ -18,9 +18,13 @@ class MoviePosterWidget extends StatelessWidget {
     String imagePath = movie.posterPath == null?'https://www.pngrepo.com/download/34896/movie.png':ApiURL.posterBaseURL+movie.posterPath;
     return GestureDetector(
       onTap: (){
-        MovieBloc()..getSimilarMovies(movie.id);
-        MovieDetailsBloc()..init(movie.id);
-        return Navigator.of(context).push(MaterialPageRoute(builder: (_)=>MovieDetailsScreen()));
+        if(movie.id != null){
+          MovieBloc()..getSimilarMovies(movie.id);
+          MovieDetailsBloc()..init(movie.id);
+          return Navigator.of(context).push(MaterialPageRoute(builder: (_)=>MovieDetailsScreen()));
+        }else{
+          print('no id');
+        }
       },
       child: Card(
         elevation: 10,
