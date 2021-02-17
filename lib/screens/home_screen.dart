@@ -4,22 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:movitm/assets/api_url.dart';
 import 'package:movitm/logic/bloc/home_screen/home_screen_bloc.dart';
 import 'package:movitm/logic/model/movie_model.dart';
+import 'package:movitm/logic/movie_response.dart';
 import 'package:movitm/screens/view_all_screen.dart';
 import 'package:movitm/tools/movie_poster_widget.dart';
 import 'package:provider/provider.dart';
+
+import 'homeScreen/label_manager_widget.dart';
+import 'homeScreen/movie_section.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var a = TimeOfDay.now();
     var message;
-    if(a.hour>=5 && a.hour<12){
+    if (a.hour >= 5 && a.hour < 12) {
       message = 'Morning';
-    }else if(a.hour>=12 && a.hour<16){
+    } else if (a.hour >= 12 && a.hour < 16) {
       message = 'Afternoon';
-    }else if(a.hour>=17 && a.hour<21){
+    } else if (a.hour >= 17 && a.hour < 21) {
       message = 'Evening';
-    }else{
+    } else {
       message = 'Night';
     }
     double height = MediaQuery.of(context).size.height;
@@ -48,7 +52,7 @@ class HomeScreen extends StatelessWidget {
                         Text(
                           'Good $message',
                           style: TextStyle(
-                            fontSize: width*0.17,
+                            fontSize: width * 0.17,
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
@@ -57,7 +61,7 @@ class HomeScreen extends StatelessWidget {
                         Text(
                           'Upcoming Movies',
                           style: TextStyle(
-                            fontSize: width*0.07,
+                            fontSize: width * 0.07,
                             color: Colors.blueGrey,
                           ),
                         ),
@@ -73,7 +77,7 @@ class HomeScreen extends StatelessWidget {
                                 Colors.white,
                               ],
                               begin: Alignment(0, -1),
-                              end: Alignment(0,1),
+                              end: Alignment(0, 1),
                             ),
                           ),
                           child: CarouselSlider(
@@ -102,160 +106,31 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 20.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Streaming Now',
-                              style: TextStyle(
-                                fontSize: width*0.07,
-                                color: Colors.blueGrey,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                List<MovieModel> list =
-                                    movies.popular.movieList;
-                                return Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) => ViewAllScreen(
-                                      segment: ' Streaming Now',
-                                      movies: list,
-                                      totalPage: movies.streamingNow.totalPages,
-                                      url: ApiURL.paginationNowPlayingURL,
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                'View All',
-                                style: TextStyle(
-                                    fontSize: width*0.04,
-                                    color: Colors.blueGrey,
-                                    decoration: TextDecoration.underline),
-                              ),
-                            ),
-                          ],
+                        LabelManagerWidget(
+                          movieType: movies.streamingNow,
+                          index: 1,
                         ),
                         SizedBox(height: 10.0),
                         MovieSection(
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: movies?.streamingNow?.movieList?.length,
-                            itemBuilder: (_, index) => Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: MoviePosterWidget(
-                                movie: movies.streamingNow.movieList[index],
-                              ),
-                            ),
-                            separatorBuilder: (_, index) => SizedBox(
-                              width: 2.0,
-                            ),
-                          ),
+                          movies: movies?.streamingNow?.movieList,
                         ),
                         SizedBox(height: 20.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Top Rated',
-                              style: TextStyle(
-                                fontSize: width*0.07,
-                                color: Colors.blueGrey,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                List<MovieModel> list =
-                                    movies.topRated.movieList;
-                                return Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) => ViewAllScreen(
-                                      segment: ' Top Rated',
-                                      movies: list,
-                                      url: ApiURL.paginationTopRatedURL,
-                                      totalPage: movies.topRated.totalPages,
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                'View All',
-                                style: TextStyle(
-                                    fontSize: width*0.04,
-                                    color: Colors.blueGrey,
-                                    decoration: TextDecoration.underline),
-                              ),
-                            ),
-                          ],
+                        LabelManagerWidget(
+                          movieType: movies.topRated,
+                          index: 2,
                         ),
                         SizedBox(height: 10.0),
                         MovieSection(
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: movies?.topRated?.movieList?.length,
-                            itemBuilder: (_, index) => Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: MoviePosterWidget(
-                                movie: movies.topRated.movieList[index],
-                              ),
-                            ),
-                            separatorBuilder: (_, index) => SizedBox(
-                              width: 2.0,
-                            ),
-                          ),
+                          movies: movies?.topRated?.movieList,
                         ),
                         SizedBox(height: 20.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Other Popular',
-                              style: TextStyle(
-                                fontSize: width*0.07,
-                                color: Colors.blueGrey,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                List<MovieModel> list =
-                                    movies.popular.movieList;
-                                return Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) => ViewAllScreen(
-                                      segment: ' Popular Movies',
-                                      movies: list,
-                                      url: ApiURL.paginationPopularURL,
-                                      totalPage: movies.popular.totalPages,
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                'View All',
-                                style: TextStyle(
-                                    fontSize: width*0.04,
-                                    color: Colors.blueGrey,
-                                    decoration: TextDecoration.underline),
-                              ),
-                            ),
-                          ],
+                        LabelManagerWidget(
+                          movieType: movies.popular,
+                          index: 3,
                         ),
                         SizedBox(height: 10.0),
                         MovieSection(
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: movies?.popular?.movieList?.length,
-                            itemBuilder: (_, index) => Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: MoviePosterWidget(
-                                movie: movies.popular.movieList[index],
-                              ),
-                            ),
-                            separatorBuilder: (_, index) => SizedBox(
-                              width: 2.0,
-                            ),
-                          ),
+                          movies: movies?.popular?.movieList,
                         ),
                       ],
                     ),
@@ -285,32 +160,6 @@ class UpcomingMoviePosterWidget extends StatelessWidget {
           image: NetworkImage(ApiURL.posterBaseURL + movie.backdropPath),
         ),
       ),
-    );
-  }
-}
-
-class MovieSection extends StatelessWidget {
-
-  final Widget child;
-
-  const MovieSection({Key key, @required this.child}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    return Container(
-      height: height * 0.3,
-      foregroundDecoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.transparent,
-            Colors.grey.withOpacity(0.2),
-            Colors.white,
-          ],
-          begin: Alignment(0, -1),
-          end: Alignment(0,1),
-        ),
-      ),
-      child: child,
     );
   }
 }
