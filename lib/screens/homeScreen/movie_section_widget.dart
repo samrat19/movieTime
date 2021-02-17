@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:movitm/logic/model/movie_model.dart';
 import 'package:movitm/tools/movie_poster_widget.dart';
 
-class MovieSection extends StatelessWidget {
+class MovieSectionWidget extends StatelessWidget {
 
   final List<MovieModel> movies;
 
-  const MovieSection({Key key, @required this.movies}) : super(key: key);
+  const MovieSectionWidget({Key key, @required this.movies}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

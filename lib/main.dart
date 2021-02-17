@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:movitm/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'logic/bloc/home_screen/home_screen_bloc.dart';
+import 'screens/homeScreen/home_screen.dart';
 
 main() => runApp(
       MaterialApp(
