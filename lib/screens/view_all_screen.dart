@@ -1,16 +1,11 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:movitm/assets/api_url.dart';
-import 'package:movitm/logic/bloc/home_screen/home_screen_bloc.dart';
-import 'package:movitm/logic/bloc/movie_details/movie_details_bloc.dart';
 import 'package:movitm/logic/model/movie_model.dart';
 import 'package:movitm/logic/movie_response.dart';
 import 'package:http/http.dart' as http;
+import 'package:movitm/tools/app_utils.dart';
 import 'package:movitm/tools/movie_poster_widget.dart';
-
-import 'movie_details_screen.dart';
 
 class ViewAllScreen extends StatefulWidget {
   final String segment;
@@ -94,8 +89,7 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
                     children: [
                       GestureDetector(
                         onTap: () => Navigator.pop(context),
-                        child: Icon(Icons.arrow_back_ios_outlined,
-                            color: Colors.blueGrey[900], size: 25),
+                        child: AppUtils.backButton,
                       ),
                       Text(
                         widget.segment,
@@ -128,41 +122,6 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
                 ],
               ),
             ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ViewAllMoviePosterWidget extends StatelessWidget {
-  final MovieModel movie;
-
-  const ViewAllMoviePosterWidget({Key key, this.movie}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-    String imagePath = movie.posterPath == null
-        ? 'https://www.pngrepo.com/download/34896/movie.png'
-        : ApiURL.posterBaseURL + movie.posterPath;
-    return GestureDetector(
-      onTap: (){
-        MovieBloc()..getSimilarMovies(movie.id);
-        MovieDetailsBloc()..init(movie.id);
-        return Navigator.of(context).push(MaterialPageRoute(builder: (_)=>MovieDetailsScreen(
-          id: movie.id,
-        )));
-      },
-      child: Container(
-        width: width * 0.3,
-        height: height * 0.26,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(12.0)),
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: NetworkImage(imagePath),
           ),
         ),
       ),
