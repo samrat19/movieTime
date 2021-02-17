@@ -6,6 +6,7 @@ import 'package:movitm/assets/api_url.dart';
 import 'package:movitm/logic/bloc/movie_details/movie_details_bloc.dart';
 import 'package:movitm/logic/bloc/person/person_details_bloc.dart';
 import 'package:movitm/logic/model/person_model.dart';
+import 'package:movitm/tools/app_utils.dart';
 import 'package:movitm/tools/movie_poster_widget.dart';
 
 class CastDetailsScreen extends StatelessWidget {
@@ -194,8 +195,8 @@ class CastDetailsScreen extends StatelessWidget {
                 left: 10,
                 child: GestureDetector(
                     onTap: () => Navigator.pop(context),
-                    child: Icon(Icons.arrow_back_ios_outlined,
-                        color: Colors.grey)),
+                    child: AppUtils.backButton,
+                ),
               ),
             ],
           ),

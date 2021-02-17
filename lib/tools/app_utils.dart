@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 abstract class AppUtils {
   static final Icon backButton = Icon(
     Icons.arrow_back_ios_outlined,
-    color: Colors.blueGrey[900],
+    color: Colors.blueGrey,
     size: 25,
   );
 }
