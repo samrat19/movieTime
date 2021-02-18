@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:movitm/assets/api_url.dart';
+import 'package:movitm/logic/model/movie_cast_model.dart';
 
 class MovieCast extends StatelessWidget {
-  final String posterURL;
-  final String name;
+  final Cast movieCast;
 
-  const MovieCast({Key key, this.posterURL, this.name}) : super(key: key);
+  const MovieCast({Key key, @required this.movieCast}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    String profileURL = movieCast.profilePath == null
+        ? null : ApiURL.posterBaseURL + movieCast.profilePath;
+
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -19,14 +24,12 @@ class MovieCast extends StatelessWidget {
               color: Colors.transparent,
               shape: BoxShape.circle,
               image: DecorationImage(
-                image: NetworkImage(posterURL == null
-                    ? 'https://www.vippng.com/png/full/356-3563630_continue-marketing.png'
-                    : posterURL),
+                image: NetworkImage(profileURL),
               ),
             ),
           ),
           Text(
-            name,
+            movieCast.name,
             style: TextStyle(
               fontSize: 17.0,
               color: Colors.black,

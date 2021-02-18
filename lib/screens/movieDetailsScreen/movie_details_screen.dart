@@ -5,10 +5,11 @@ import 'package:movitm/logic/bloc/home_screen/home_screen_bloc.dart';
 import 'package:movitm/logic/bloc/movie_details/movie_details_bloc.dart';
 import 'package:movitm/logic/bloc/person/person_details_bloc.dart';
 import 'package:movitm/logic/model/movie_model.dart';
-import 'package:movitm/logic/movie_response.dart';
-
+import 'package:movitm/screens/movieDetailsScreen/movie_title_section.dart';
+import 'package:movitm/tools/app_utils.dart';
 import '../castDetailsScreen/cast_details_Screen.dart';
 import 'movie_cast.dart';
+import 'movie_genre.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
   final int id;
@@ -55,112 +56,12 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     builder:
                         (context, AsyncSnapshot<MovieDetailsManager> snapshot) {
                       if (snapshot.hasData) {
-                        //print(snapshot.data.movieDetails.toString());
                         var movieDetails = snapshot.data.movieDetails;
                         var movieCast = snapshot.data.movieCast;
                         var similarMovie = snapshot.data.similarMovie;
-                        String posterPath = snapshot
-                                    .data.movieDetails.backdropPath ==
-                                null
-                            ? 'https://www.pngrepo.com/download/34896/movie.png'
-                            : ApiURL.posterBaseURL + movieDetails.backdropPath;
                         return Column(
                           children: [
-                            Expanded(
-                              flex: 2,
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    foregroundDecoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          Colors.white,
-                                          Colors.grey.withOpacity(0.1),
-                                          Colors.transparent,
-                                        ],
-                                        begin: Alignment(0, 1),
-                                        end: Alignment(0, -1),
-                                      ),
-                                    ),
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: NetworkImage(posterPath),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          movieDetails.title,
-                                          style: TextStyle(
-                                            fontSize: 30.0,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 5.0,
-                                        ),
-                                        Text(
-                                          '${movieDetails.runtime} minutes',
-                                          style: TextStyle(
-                                            fontSize: 20.0,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 5.0,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Rating',
-                                              style: TextStyle(
-                                                fontSize: 20.0,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 5.0,
-                                            ),
-                                            RatingBar(
-                                              initialRating:
-                                                  movieDetails.voteAverage,
-                                              ratingWidget: RatingWidget(
-                                                full: Icon(
-                                                  Icons.star,
-                                                  color: Colors.grey,
-                                                ),
-                                                half: Icon(
-                                                  Icons.star_half,
-                                                  color: Colors.grey,
-                                                ),
-                                                empty: Icon(
-                                                  Icons.star_border_outlined,
-                                                  color: Colors.grey,
-                                                ),
-                                              ),
-                                              onRatingUpdate: null,
-                                              itemCount: 10,
-                                              itemSize: 20.0,
-                                            )
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 4.0,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            MovieTitleSection(movieDetails: movieDetails,),
                             Expanded(
                               flex: 3,
                               child: SingleChildScrollView(
@@ -169,8 +70,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(
                                         height: 20.0,
@@ -207,37 +107,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                       SizedBox(
                                         height: 10.0,
                                       ),
-                                      Wrap(
-                                        spacing: 10.0,
-                                        runSpacing: 10.0,
-                                        direction: Axis.horizontal,
-                                        children: movieDetails.genres
-                                            .map(
-                                              (e) => Container(
-                                                decoration: BoxDecoration(
-                                                  color: Colors.blueGrey,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(10.0),
-                                                  ),
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 10.0,
-                                                      vertical: 4.0),
-                                                  child: Text(
-                                                    e.name,
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: width * 0.05,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            )
-                                            .toList(),
-                                      ),
+                                      MovieGenre(
+                                        genres: movieDetails.genres),
                                       SizedBox(
                                         height: 20.0,
                                       ),
@@ -282,16 +153,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                               child: Hero(
                                                 tag: movieCast.cast[index].id,
                                                 child: MovieCast(
-                                                  name: movieCast
-                                                      .cast[index].name,
-                                                  posterURL: movieCast
-                                                              .cast[index]
-                                                              .profilePath ==
-                                                          null
-                                                      ? null
-                                                      : ApiURL.posterBaseURL +
-                                                          movieCast.cast[index]
-                                                              .profilePath,
+                                                  movieCast: movieCast.cast[index],
                                                 ),
                                               ),
                                             );
@@ -315,37 +177,20 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                       similarMovie != null
                                           ? Container(
                                               height: height * 0.3,
-                                              foregroundDecoration:
-                                                  BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    Colors.transparent,
-                                                    Colors.grey
-                                                        .withOpacity(0.2),
-                                                    Colors.white,
-                                                  ],
-                                                  begin: Alignment(0, -1),
-                                                  end: Alignment(0, 1),
-                                                ),
-                                              ),
+                                              foregroundDecoration:AppUtils.foreGroundDecoration1,
                                               child: ListView.separated(
-                                                  scrollDirection: Axis
-                                                      .horizontal,
-                                                  itemCount: similarMovie
-                                                      .movieList.length,
+                                                  scrollDirection: Axis.horizontal,
+                                                  itemCount: similarMovie.movieList.length,
                                                   itemBuilder: (_, index) =>
                                                       Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: poster(
-                                                              context,
-                                                              similarMovie
-                                                                      .movieList[
-                                                                  index])),
+                                                          padding: const EdgeInsets.all(8.0),
+                                                          child: poster(context,
+                                                              similarMovie.movieList[index],
+                                                          ),
+                                                      ),
                                                   separatorBuilder:
-                                                      (_, index) =>
-                                                          SizedBox(width: 2.0)),
+                                                      (_, index) => SizedBox(width: 2.0),
+                                              ),
                                             )
                                           : CircularProgressIndicator(),
                                     ],
@@ -394,7 +239,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     String imagePath = movie.posterPath == null
-        ? 'https://www.pngrepo.com/download/34896/movie.png'
+        ? ApiURL.nullImage
         : ApiURL.posterBaseURL + movie.posterPath;
     return GestureDetector(
       onTap: () {
