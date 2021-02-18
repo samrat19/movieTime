@@ -9,6 +9,10 @@ import 'package:movitm/logic/model/person_model.dart';
 import 'package:movitm/tools/app_utils.dart';
 import 'package:movitm/tools/movie_poster_widget.dart';
 
+import 'image_segment.dart';
+import 'movie_segment.dart';
+import 'social_media_segment.dart';
+
 class CastDetailsScreen extends StatelessWidget {
   final int heroTag;
 
@@ -200,88 +204,6 @@ class CastDetailsScreen extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class ImageSegment extends StatelessWidget {
-
-  final AsyncSnapshot<PersonDetailsManager> snapShot;
-
-  const ImageSegment({Key key, @required this.snapShot}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    return Container(
-      height: height * 0.3,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: snapShot.data.images.profiles.length,
-        itemBuilder: (_, index) {
-          var imagePath = ApiURL.posterBaseURL + snapShot.data.images.profiles[index].filePath;
-          return Padding(
-            padding:
-            const EdgeInsets.all(8.0),
-            child: Image.network(imagePath));
-        },
-        separatorBuilder: (_, index) => SizedBox(width: 2.0),
-      ),
-    );
-  }
-}
-
-class MovieSegment extends StatelessWidget {
-  final AsyncSnapshot<PersonDetailsManager> snapShot;
-
-  const MovieSegment({Key key, @required this.snapShot}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    return Container(
-      height: height * 0.35,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: snapShot.data.movies.movies.length,
-        itemBuilder: (_, index) {
-          print(snapShot.data.movies.movies[index].posterPath);
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: MoviePosterWidget(
-              movie: snapShot.data.movies.movies[index],
-            ),
-          );
-        },
-        separatorBuilder: (_, index) => SizedBox(width: 2.0),
-      ),
-    );
-  }
-}
-
-
-class SocialMediaSegment extends StatelessWidget {
-  final AsyncSnapshot<PersonDetailsManager> snapShot;
-
-  const SocialMediaSegment({Key key, @required this.snapShot}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-    return Container(
-      height: height*0.1,
-      child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Icon(FontAwesomeIcons.facebook, color: Colors.black,
-              size: width*0.1,),
-            Icon(FontAwesomeIcons.instagram, color: Colors.black,
-              size: width*0.1,),
-            Icon(FontAwesomeIcons.twitter, color: Colors.black,
-              size: width*0.1,),
-          ],
         ),
       ),
     );

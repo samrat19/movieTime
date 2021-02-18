@@ -6,7 +6,8 @@ import 'package:movitm/logic/bloc/movie_details/movie_details_bloc.dart';
 import 'package:movitm/logic/bloc/person/person_details_bloc.dart';
 import 'package:movitm/logic/model/movie_model.dart';
 import 'package:movitm/logic/movie_response.dart';
-import 'package:movitm/screens/cast_details_Screen.dart';
+
+import 'castDetailsScreen/cast_details_Screen.dart';
 
 
 class MovieDetailsScreen extends StatefulWidget {
