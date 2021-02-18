@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movitm/logic/bloc/person/person_details_bloc.dart';
 import 'package:movitm/logic/model/person/person_movie_model.dart';
 import 'package:movitm/tools/movie_poster_widget.dart';
 

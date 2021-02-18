@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:movitm/assets/api_url.dart';
-import 'package:movitm/logic/bloc/person/person_details_bloc.dart';
 import 'package:movitm/logic/model/person/person_image_model.dart';
 
 class ImageSegment extends StatelessWidget {

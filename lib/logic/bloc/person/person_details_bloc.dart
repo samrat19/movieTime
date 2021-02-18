@@ -13,25 +13,25 @@ export 'person_details_manager.dart';
 
 Future<PersonModel> getPersonDetails(String url) async {
   var response = await http
-      .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+      .get(Uri.parse(url), headers: {"Accept": "application/json"});
   return PersonModel.fromJson(json.decode(response.body));
 }
 
 Future<PersonMovieModel> getPersonMovie(String url) async {
   var response = await http
-      .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+      .get(Uri.parse(url), headers: {"Accept": "application/json"});
   return PersonMovieModel.fromJson(json.decode(response.body));
 }
 
 Future<PersonLinkModel> getPersonLink(String url) async {
   var response = await http
-      .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+      .get(Uri.parse(url), headers: {"Accept": "application/json"});
   return PersonLinkModel.fromJson(json.decode(response.body));
 }
 
 Future<PersonImageModel> getPersonImages(String url) async {
   var response = await http
-      .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+      .get(Uri.parse(url), headers: {"Accept": "application/json"});
   return PersonImageModel.fromJson(json.decode(response.body));
 }
 

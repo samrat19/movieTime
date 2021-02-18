@@ -11,7 +11,7 @@ export 'home_screen_movie_content.dart';
 
 Future<MovieResponse> getMovies(String url) async {
   var response = await http
-      .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+      .get(Uri.parse(url), headers: {"Accept": "application/json"});
   return MovieResponse.fromJson(json.decode(response.body));
 }
 

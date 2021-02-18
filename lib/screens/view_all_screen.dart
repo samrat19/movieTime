@@ -50,11 +50,12 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
     fetchMoreMovies(currentPage);
   }
 
+
   fetchMoreMovies(int page) async {
     String url = '${widget.url}$page';
     print(url);
     var response = await http
-        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+        .get(Uri.parse(url),headers: {"Accept": "application/json"});
 
     var fetched = MovieResponse.fromJson(json.decode(response.body)).movieList;
 

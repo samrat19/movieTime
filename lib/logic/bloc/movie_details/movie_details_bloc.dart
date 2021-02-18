@@ -13,19 +13,19 @@ export 'movie_details_manager.dart';
 
 Future<MovieResponse> getMovies(String url) async {
   var response = await http
-      .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+      .get(Uri.parse(url), headers: {"Accept": "application/json"});
   return MovieResponse.fromJson(json.decode(response.body));
 }
 
 Future<MovieDetailsModel> getMovieDetails(String url) async {
   var response = await http
-      .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+      .get(Uri.parse(url), headers: {"Accept": "application/json"});
   return MovieDetailsModel.fromJson(json.decode(response.body));
 }
 
 Future<MovieCastModel> getMovieCast(String url) async {
   var response = await http
-      .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+      .get(Uri.parse(url), headers: {"Accept": "application/json"});
   return MovieCastModel.fromJson(json.decode(response.body));
 }
 

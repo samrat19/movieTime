@@ -235,7 +235,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   Widget poster(BuildContext context, MovieModel movie) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     String imagePath = movie.posterPath == null
         ? ApiURL.nullImage
         : ApiURL.posterBaseURL + movie.posterPath;
