@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movitm/assets/api_url.dart';
-import 'package:movitm/logic/bloc/home_screen/home_screen_bloc.dart';
 import 'package:movitm/logic/bloc/movie_details/movie_details_bloc.dart';
 import 'package:movitm/logic/model/movie_model.dart';
 import 'package:movitm/screens/movie_details_screen.dart';
@@ -20,10 +19,10 @@ class MoviePosterWidget extends StatelessWidget {
     return GestureDetector(
       onTap: (){
         if(movie.id != null){
-          MovieBloc()..getSimilarMovies(movie.id);
+          MovieDetailsBloc()..getSimilarMovies(movie.id);
           MovieDetailsBloc()..init(movie.id);
           return Navigator.of(context).push(MaterialPageRoute(builder: (_)=>MovieDetailsScreen(id: movie.id,))).then((value){
-            MovieBloc()..getSimilarMovies(movie.id);
+            MovieDetailsBloc()..getSimilarMovies(movie.id);
             MovieDetailsBloc()..init(movie.id);
           });
         }else{

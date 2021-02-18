@@ -6,9 +6,16 @@ import 'package:movitm/logic/model/movie_details_model.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:http/http.dart' as http;
 
+import '../../movie_response.dart';
 import 'movie_details_manager.dart';
 export 'movie_details_manager.dart';
 
+
+Future<MovieResponse> getMovies(String url) async {
+  var response = await http
+      .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+  return MovieResponse.fromJson(json.decode(response.body));
+}
 
 Future<MovieDetailsModel> getMovieDetails(String url) async {
   var response = await http
@@ -35,8 +42,10 @@ class MovieDetailsBloc{
   );
 
   var _movieDetailsSubject = BehaviorSubject<MovieDetailsManager>();
+  var _similarMovieSubject = BehaviorSubject<MovieResponse>();
 
   Stream<MovieDetailsManager> get movieDetailsStream => _movieDetailsSubject.stream;
+  Stream<MovieResponse> get similarMovie => _similarMovieSubject.stream;
 
   init(int movieID) {
     this.addMovieDetails(movieID);
@@ -55,8 +64,15 @@ class MovieDetailsBloc{
     _movieDetailsSubject.sink.add(movieManager);
   }
 
+  getSimilarMovies(int movieID)async{
+    var url = 'https://api.themoviedb.org/3/movie/$movieID/similar${ApiURL.apiKey}&language=en-US&page=1';
+    var response = await getMovies(url);
+    _similarMovieSubject.sink.add(response);
+  }
+
   dispose() {
     _movieDetailsSubject.close();
+    _similarMovieSubject.close();
   }
 }
 

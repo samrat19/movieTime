@@ -15,12 +15,12 @@ Future<MovieResponse> getMovies(String url) async {
   return MovieResponse.fromJson(json.decode(response.body));
 }
 
-class MovieBloc{
-  MovieBloc._internal();
+class HomeScreenBloc{
+  HomeScreenBloc._internal();
 
-  static final _singleton = MovieBloc._internal();
+  static final _singleton = HomeScreenBloc._internal();
 
-  factory MovieBloc() => _singleton;
+  factory HomeScreenBloc() => _singleton;
 
   HomeScreenMovieContent homeScreenMovieContent = HomeScreenMovieContent(
     popular: null,
@@ -30,7 +30,6 @@ class MovieBloc{
   );
 
   var _movieResponseSubject = BehaviorSubject<HomeScreenMovieContent>();
-  var _similarMovieSubject = BehaviorSubject<MovieResponse>();
 
   Stream<HomeScreenMovieContent> get movieStream => _movieResponseSubject.stream;
 
@@ -67,15 +66,6 @@ class MovieBloc{
 
   dispose() {
     _movieResponseSubject.close();
-    _similarMovieSubject.close();
   }
-
-  getSimilarMovies(int movieID)async{
-    var url = 'https://api.themoviedb.org/3/movie/$movieID/similar${ApiURL.apiKey}&language=en-US&page=1';
-    var response = await getMovies(url);
-    _similarMovieSubject.sink.add(response);
-  }
-
-  Stream<MovieResponse> get similarMovie => _similarMovieSubject.stream;
 }
 

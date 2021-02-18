@@ -19,7 +19,7 @@ class InitApp extends StatefulWidget {
 class _InitAppState extends State<InitApp> {
   @override
   void initState() {
-    MovieBloc().init();
+    HomeScreenBloc().init();
     super.initState();
   }
 
@@ -32,7 +32,7 @@ class _InitAppState extends State<InitApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: StreamBuilder(
-        stream: MovieBloc().movieStream,
+        stream: HomeScreenBloc().movieStream,
         builder: (_, AsyncSnapshot<HomeScreenMovieContent> snapshot) =>
             snapshot.hasData
                 ? Provider<HomeScreenMovieContent>.value(

@@ -307,7 +307,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                         height: 10.0,
                                       ),
                                       StreamBuilder<MovieResponse>(
-                                        stream: MovieBloc().similarMovie,
+                                        stream: MovieDetailsBloc().similarMovie,
                                         builder:
                                             (_, AsyncSnapshot<MovieResponse> snapShot) {
                                           return snapShot.hasData
@@ -369,7 +369,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         print(movieID.length.toString());
                       });
                       var id = movieID[movieID.length-1];
-                      MovieBloc()..getSimilarMovies(id);
+                      MovieDetailsBloc()..getSimilarMovies(id);
                       MovieDetailsBloc()..init(id);
                     }
                   },
@@ -395,7 +395,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
           movieID.add(movie.id);
           print(movieID.length.toString());
         });
-        MovieBloc()..getSimilarMovies(movie.id);
+        MovieDetailsBloc()..getSimilarMovies(movie.id);
         MovieDetailsBloc()..init(movie.id);
       },
       child: Container(
