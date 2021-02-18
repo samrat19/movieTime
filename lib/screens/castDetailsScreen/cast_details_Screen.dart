@@ -7,8 +7,6 @@ import 'package:movitm/logic/bloc/movie_details/movie_details_bloc.dart';
 import 'package:movitm/logic/bloc/person/person_details_bloc.dart';
 import 'package:movitm/logic/model/person_model.dart';
 import 'package:movitm/tools/app_utils.dart';
-import 'package:movitm/tools/movie_poster_widget.dart';
-
 import 'image_segment.dart';
 import 'movie_segment.dart';
 import 'social_media_segment.dart';
