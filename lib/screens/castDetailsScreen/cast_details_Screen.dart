@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:movitm/assets/api_url.dart';
-import 'package:movitm/logic/bloc/movie_details/movie_details_bloc.dart';
 import 'package:movitm/logic/bloc/person/person_details_bloc.dart';
 import 'package:movitm/logic/model/person_model.dart';
 import 'package:movitm/tools/app_utils.dart';
@@ -39,7 +37,7 @@ class CastDetailsScreen extends StatelessWidget {
             fit: StackFit.expand,
             children: [
               StreamBuilder<PersonModel>(
-                  stream: MovieDetailsBloc().personStream,
+                  stream: PersonDetailsBloc().personStream,
                   builder: (context, AsyncSnapshot<PersonModel> snapshot) {
                     return snapshot.hasData
                         ? SingleChildScrollView(

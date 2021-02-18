@@ -263,7 +263,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                               onTap: () {
                                                 int id = snapshot.data.movieCast
                                                     .cast[index].id;
-                                                MovieDetailsBloc()..getPerson(id);
+                                                PersonDetailsBloc()..getPerson(id);
                                                 PersonDetailsBloc()..init(id);
                                                 Navigator.of(context)
                                                     .push(MaterialPageRoute(

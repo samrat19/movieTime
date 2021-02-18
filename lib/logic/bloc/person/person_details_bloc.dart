@@ -4,12 +4,18 @@ import 'package:movitm/assets/api_url.dart';
 import 'package:movitm/logic/model/person/person_image_model.dart';
 import 'package:movitm/logic/model/person/person_link_model.dart';
 import 'package:movitm/logic/model/person/person_movie_model.dart';
+import 'package:movitm/logic/model/person_model.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:http/http.dart' as http;
 
 import 'person_details_manager.dart';
 export 'person_details_manager.dart';
 
+Future<PersonModel> getPersonDetails(String url) async {
+  var response = await http
+      .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+  return PersonModel.fromJson(json.decode(response.body));
+}
 
 Future<PersonMovieModel> getPersonMovie(String url) async {
   var response = await http
@@ -43,8 +49,10 @@ class PersonDetailsBloc{
   );
 
   var _personDetailsSubject = BehaviorSubject<PersonDetailsManager>();
+  var _personSubject = BehaviorSubject<PersonModel>();
 
   Stream<PersonDetailsManager> get personDetailsStream => _personDetailsSubject.stream;
+  Stream<PersonModel> get personStream => _personSubject.stream;
 
   init(int personID) {
     this.addMovieDetails(personID);
@@ -71,8 +79,14 @@ class PersonDetailsBloc{
   }
 
 
+  getPerson(int personID) async {
+    var _person = await getPersonDetails('https://api.themoviedb.org/3/person/$personID${ApiURL.apiKey}&language=en-US');
+    _personSubject.sink.add(_person);
+  }
+
   dispose() {
     _personDetailsSubject.close();
+    _personSubject.close();
   }
 }
 
