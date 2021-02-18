@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:movitm/logic/bloc/person/person_details_bloc.dart';
+import 'package:movitm/logic/model/person/person_link_model.dart';
 
 class SocialMediaSegment extends StatelessWidget {
-  final AsyncSnapshot<PersonDetailsManager> snapShot;
+  final PersonLinkModel links;
 
-  const SocialMediaSegment({Key key, @required this.snapShot}) : super(key: key);
+  const SocialMediaSegment({Key key, @required this.links}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;

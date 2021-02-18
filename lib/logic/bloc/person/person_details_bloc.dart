@@ -46,6 +46,7 @@ class PersonDetailsBloc{
    images: null,
     links: null,
     movies: null,
+    person: null,
   );
 
   var _personDetailsSubject = BehaviorSubject<PersonDetailsManager>();
@@ -81,7 +82,8 @@ class PersonDetailsBloc{
 
   getPerson(int personID) async {
     var _person = await getPersonDetails('https://api.themoviedb.org/3/person/$personID${ApiURL.apiKey}&language=en-US');
-    _personSubject.sink.add(_person);
+    personManager.person  = _person;
+    _personDetailsSubject.sink.add(personManager);
   }
 
   dispose() {

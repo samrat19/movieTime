@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:movitm/assets/api_url.dart';
 import 'package:movitm/logic/bloc/person/person_details_bloc.dart';
+import 'package:movitm/logic/model/person/person_image_model.dart';
 
 class ImageSegment extends StatelessWidget {
 
-  final AsyncSnapshot<PersonDetailsManager> snapShot;
+  final PersonImageModel images;
 
-  const ImageSegment({Key key, @required this.snapShot}) : super(key: key);
+  const ImageSegment({Key key, @required this.images}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +16,9 @@ class ImageSegment extends StatelessWidget {
       height: height * 0.3,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: snapShot.data.images.profiles.length,
+        itemCount: images.profiles.length,
         itemBuilder: (_, index) {
-          var imagePath = ApiURL.posterBaseURL + snapShot.data.images.profiles[index].filePath;
+          var imagePath = ApiURL.posterBaseURL + images.profiles[index].filePath;
           return Padding(
               padding:
               const EdgeInsets.all(8.0),

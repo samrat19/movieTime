@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:movitm/assets/api_url.dart';
 import 'package:movitm/logic/bloc/person/person_details_bloc.dart';
-import 'package:movitm/logic/model/person_model.dart';
 import 'package:movitm/tools/app_utils.dart';
 import 'image_segment.dart';
 import 'movie_segment.dart';
@@ -36,11 +35,15 @@ class CastDetailsScreen extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              StreamBuilder<PersonModel>(
-                  stream: PersonDetailsBloc().personStream,
-                  builder: (context, AsyncSnapshot<PersonModel> snapshot) {
-                    return snapshot.hasData
-                        ? SingleChildScrollView(
+              StreamBuilder<PersonDetailsManager>(
+                  stream: PersonDetailsBloc().personDetailsStream,
+                  builder: (context, AsyncSnapshot<PersonDetailsManager> snapshot) {
+                    if (snapshot.hasData) {
+                      var person = snapshot.data?.person;
+                      var movies = snapshot.data?.movies;
+                      var images = snapshot.data?.images;
+                      var links = snapshot.data?.links;
+                      return SingleChildScrollView(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -55,7 +58,7 @@ class CastDetailsScreen extends StatelessWidget {
                                               fit: BoxFit.cover,
                                               image: NetworkImage(
                                                   ApiURL.posterBaseURL +
-                                                      snapshot.data.profilePath,
+                                                      person.profilePath,
                                               ),
                                           ),
                                         ),
@@ -79,9 +82,9 @@ class CastDetailsScreen extends StatelessWidget {
                                         child: Column(
                                           children: [
                                             Text(
-                                              snapshot.data.name,
+                                              person.name,
                                               style: TextStyle(
-                                                fontSize: snapshot.data.name.length>12?width*0.12:width*0.15,
+                                                fontSize: person.name.length>12?width*0.12:width*0.15,
                                                 color: Colors.blueGrey[700],
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -98,7 +101,7 @@ class CastDetailsScreen extends StatelessWidget {
                                                 ),
                                                 SizedBox(width: 10.0,),
                                                 Text(
-                                                  snapshot.data.popularity.toString(),
+                                                  person.popularity.toString(),
                                                   style: TextStyle(
                                                     fontSize: 30.0,
                                                     color: Colors.black,
@@ -120,7 +123,7 @@ class CastDetailsScreen extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(left:8.0),
                                   child: Text(
-                                    snapshot.data.biography,
+                                    person.biography,
                                     style: TextStyle(
                                       fontSize: 17.0,
                                       color: Colors.black,
@@ -144,9 +147,7 @@ class CastDetailsScreen extends StatelessWidget {
                                 SizedBox(
                                   height: 10.0,
                                 ),
-                                StreamBuilder<PersonDetailsManager>(
-                                    stream: PersonDetailsBloc().personDetailsStream,
-                                    builder: (context, AsyncSnapshot<PersonDetailsManager>snapshot) => snapshot.hasData?ImageSegment(snapShot: snapshot,):Text('')),
+                                movies != null ? ImageSegment(images: images,):Text(''),
                                 SizedBox(
                                   height: 20.0,
                                 ),
@@ -164,9 +165,7 @@ class CastDetailsScreen extends StatelessWidget {
                                 SizedBox(
                                   height: 10.0,
                                 ),
-                                StreamBuilder<PersonDetailsManager>(
-                                    stream: PersonDetailsBloc().personDetailsStream,
-                                    builder: (context, AsyncSnapshot<PersonDetailsManager>snapshot) => snapshot.hasData ? MovieSegment(snapShot: snapshot,) : Text('')),
+                                movies != null ? MovieSegment(movies: movies,) : Text(''),
                                 SizedBox(
                                   height: 20.0,
                                 ),
@@ -179,16 +178,16 @@ class CastDetailsScreen extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                StreamBuilder<PersonDetailsManager>(
-                                    stream: PersonDetailsBloc().personDetailsStream,
-                                    builder: (context, AsyncSnapshot<PersonDetailsManager> snapshot) => SocialMediaSegment(snapShot: snapshot,)),
+                                links != null ? SocialMediaSegment(links: links,) :Text(''),
                               SizedBox(
                                 height: 10.0,
                               ),
                               ],
                             ),
-                          )
-                        : CupertinoActivityIndicator();
+                          );
+                    } else {
+                      return CupertinoActivityIndicator();
+                    }
                   }),
               Positioned(
                 top: 10,
