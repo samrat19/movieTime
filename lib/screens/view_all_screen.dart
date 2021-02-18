@@ -59,7 +59,6 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
     var fetched = MovieResponse.fromJson(json.decode(response.body)).movieList;
 
     setState(() {
-      // await Future.delayed(Duration(seconds: 2));
       widget.movies.addAll(fetched);
       print(widget.movies.length.toString());
       currentPage++;
