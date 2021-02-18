@@ -3,7 +3,7 @@ class MovieDetailsModel {
   String backdropPath;
   BelongsToCollection belongsToCollection;
   int budget;
-  List<Genres> genres;
+  List<Genres> genres = [];
   String homepage;
   int id;
   String imdbId;
@@ -12,12 +12,12 @@ class MovieDetailsModel {
   String overview;
   double popularity;
   String posterPath;
-  List<ProductionCompanies> productionCompanies;
+  List<ProductionCompanies> productionCompanies = [];
  // List<ProductionCountries> productionCountries;
   String releaseDate;
   int revenue;
   int runtime;
-  List<SpokenLanguages> spokenLanguages;
+  List<SpokenLanguages> spokenLanguages = [];
   String status;
   String tagline;
   String title;
@@ -60,7 +60,6 @@ class MovieDetailsModel {
         : null;
     budget = json['budget'];
     if (json['genres'] != null) {
-      genres = new List<Genres>();
       json['genres'].forEach((v) {
         genres.add(new Genres.fromJson(v));
       });
@@ -74,7 +73,6 @@ class MovieDetailsModel {
     popularity = json['popularity'];
     posterPath = json['poster_path'];
     if (json['production_companies'] != null) {
-      productionCompanies = new List<ProductionCompanies>();
       json['production_companies'].forEach((v) {
         productionCompanies.add(new ProductionCompanies.fromJson(v));
       });
@@ -89,7 +87,6 @@ class MovieDetailsModel {
     revenue = json['revenue'];
     runtime = json['runtime'];
     if (json['spoken_languages'] != null) {
-      spokenLanguages = new List<SpokenLanguages>();
       json['spoken_languages'].forEach((v) {
         spokenLanguages.add(new SpokenLanguages.fromJson(v));
       });
