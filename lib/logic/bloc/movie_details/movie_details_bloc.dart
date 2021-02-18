@@ -39,6 +39,7 @@ class MovieDetailsBloc{
   MovieDetailsManager movieManager = MovieDetailsManager(
     movieCast: null,
     movieDetails: null,
+    similarMovie: null,
   );
 
   var _movieDetailsSubject = BehaviorSubject<MovieDetailsManager>();
@@ -67,7 +68,8 @@ class MovieDetailsBloc{
   getSimilarMovies(int movieID)async{
     var url = 'https://api.themoviedb.org/3/movie/$movieID/similar${ApiURL.apiKey}&language=en-US&page=1';
     var response = await getMovies(url);
-    _similarMovieSubject.sink.add(response);
+    movieManager.similarMovie = response;
+    _movieDetailsSubject.sink.add(movieManager);
   }
 
   dispose() {

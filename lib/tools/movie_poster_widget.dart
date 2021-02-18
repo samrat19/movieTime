@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:movitm/assets/api_url.dart';
 import 'package:movitm/logic/bloc/movie_details/movie_details_bloc.dart';
 import 'package:movitm/logic/model/movie_model.dart';
-import 'package:movitm/screens/movie_details_screen.dart';
+import 'package:movitm/screens/movieDetailsScreen/movie_details_screen.dart';
 
 class MoviePosterWidget extends StatelessWidget {
   final MovieModel movie;

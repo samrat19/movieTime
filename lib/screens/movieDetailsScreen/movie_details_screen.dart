@@ -7,11 +7,10 @@ import 'package:movitm/logic/bloc/person/person_details_bloc.dart';
 import 'package:movitm/logic/model/movie_model.dart';
 import 'package:movitm/logic/movie_response.dart';
 
-import 'castDetailsScreen/cast_details_Screen.dart';
-
+import '../castDetailsScreen/cast_details_Screen.dart';
+import 'movie_cast.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
-
   final int id;
 
   const MovieDetailsScreen({Key key, @required this.id}) : super(key: key);
@@ -21,7 +20,6 @@ class MovieDetailsScreen extends StatefulWidget {
 }
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
-
   List<int> movieID = [];
 
   @override
@@ -35,7 +33,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   Future<bool> back() async {
     return false;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -55,13 +52,18 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                 width: width,
                 child: StreamBuilder<MovieDetailsManager>(
                     stream: MovieDetailsBloc().movieDetailsStream,
-                    builder: (context, AsyncSnapshot<MovieDetailsManager> snapshot) {
+                    builder:
+                        (context, AsyncSnapshot<MovieDetailsManager> snapshot) {
                       if (snapshot.hasData) {
                         //print(snapshot.data.movieDetails.toString());
                         var movieDetails = snapshot.data.movieDetails;
                         var movieCast = snapshot.data.movieCast;
-                        String posterPath = snapshot.data.movieDetails.backdropPath == null?'https://www.pngrepo.com/download/34896/movie.png':ApiURL.posterBaseURL +
-                            movieDetails.backdropPath;
+                        var similarMovie = snapshot.data.similarMovie;
+                        String posterPath = snapshot
+                                    .data.movieDetails.backdropPath ==
+                                null
+                            ? 'https://www.pngrepo.com/download/34896/movie.png'
+                            : ApiURL.posterBaseURL + movieDetails.backdropPath;
                         return Column(
                           children: [
                             Expanded(
@@ -167,7 +169,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(
                                         height: 20.0,
@@ -175,7 +178,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                       Text(
                                         'Overview',
                                         style: TextStyle(
-                                          fontSize: width*0.09,
+                                          fontSize: width * 0.09,
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -186,7 +189,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                       Text(
                                         movieDetails.overview,
                                         style: TextStyle(
-                                          fontSize: width*0.04,
+                                          fontSize: width * 0.04,
                                           color: Colors.black,
                                         ),
                                       ),
@@ -196,7 +199,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                       Text(
                                         'Genre',
                                         style: TextStyle(
-                                          fontSize: width*0.09,
+                                          fontSize: width * 0.09,
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -213,20 +216,22 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                               (e) => Container(
                                                 decoration: BoxDecoration(
                                                   color: Colors.blueGrey,
-                                                  borderRadius: BorderRadius.all(
+                                                  borderRadius:
+                                                      BorderRadius.all(
                                                     Radius.circular(10.0),
                                                   ),
                                                 ),
                                                 child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.symmetric(
-                                                          horizontal: 10.0,
-                                                          vertical: 4.0),
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 10.0,
+                                                      vertical: 4.0),
                                                   child: Text(
                                                     e.name,
                                                     style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: width*0.05,),
+                                                      color: Colors.white,
+                                                      fontSize: width * 0.05,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -239,7 +244,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                       Text(
                                         'MovieCast',
                                         style: TextStyle(
-                                          fontSize: width*0.09,
+                                          fontSize: width * 0.09,
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -261,9 +266,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                             //print('cast index $index profile path = ${movieCast.cast[index].profilePath}');
                                             return GestureDetector(
                                               onTap: () {
-                                                int id = snapshot.data.movieCast
-                                                    .cast[index].id;
-                                                PersonDetailsBloc()..getPerson(id);
+                                                int id =
+                                                    movieCast.cast[index].id;
+                                                PersonDetailsBloc()
+                                                  ..getPerson(id);
                                                 PersonDetailsBloc()..init(id);
                                                 Navigator.of(context)
                                                     .push(MaterialPageRoute(
@@ -274,12 +280,12 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                                 ));
                                               },
                                               child: Hero(
-                                                tag: snapshot.data.movieCast
-                                                    .cast[index].id,
+                                                tag: movieCast.cast[index].id,
                                                 child: MovieCast(
-                                                  name:
-                                                      movieCast.cast[index].name,
-                                                  posterURL: movieCast.cast[index]
+                                                  name: movieCast
+                                                      .cast[index].name,
+                                                  posterURL: movieCast
+                                                              .cast[index]
                                                               .profilePath ==
                                                           null
                                                       ? null
@@ -306,42 +312,42 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                       SizedBox(
                                         height: 10.0,
                                       ),
-                                      StreamBuilder<MovieResponse>(
-                                        stream: MovieDetailsBloc().similarMovie,
-                                        builder:
-                                            (_, AsyncSnapshot<MovieResponse> snapShot) {
-                                          return snapShot.hasData
-                                              ? Container(
-                                            height: height * 0.3,
-                                            foregroundDecoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  Colors.transparent,
-                                                  Colors.grey.withOpacity(0.2),
-                                                  Colors.white,
-                                                ],
-                                                begin: Alignment(0, -1),
-                                                end: Alignment(0,1),
+                                      similarMovie != null
+                                          ? Container(
+                                              height: height * 0.3,
+                                              foregroundDecoration:
+                                                  BoxDecoration(
+                                                gradient: LinearGradient(
+                                                  colors: [
+                                                    Colors.transparent,
+                                                    Colors.grey
+                                                        .withOpacity(0.2),
+                                                    Colors.white,
+                                                  ],
+                                                  begin: Alignment(0, -1),
+                                                  end: Alignment(0, 1),
+                                                ),
                                               ),
-                                            ),
-                                                  child: ListView.separated(
-                                                    scrollDirection: Axis.horizontal,
-                                                    itemCount:
-                                                        snapShot.data.movieList.length,
-                                                    itemBuilder: (_, index) => Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(8.0),
-                                                      child: poster(context, snapShot.data.movieList[index])
-                                                    ),
-                                                    separatorBuilder: (_, index) =>
-                                                        SizedBox(
-                                                      width: 2.0
-                                                    )
-                                                  ),
-                                                )
-                                              : CircularProgressIndicator();
-                                        },
-                                      ),
+                                              child: ListView.separated(
+                                                  scrollDirection: Axis
+                                                      .horizontal,
+                                                  itemCount: similarMovie
+                                                      .movieList.length,
+                                                  itemBuilder: (_, index) =>
+                                                      Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: poster(
+                                                              context,
+                                                              similarMovie
+                                                                      .movieList[
+                                                                  index])),
+                                                  separatorBuilder:
+                                                      (_, index) =>
+                                                          SizedBox(width: 2.0)),
+                                            )
+                                          : CircularProgressIndicator(),
                                     ],
                                   ),
                                 ),
@@ -361,14 +367,14 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   onTap: () {
                     //list null then pop otherwise load last id
                     //check for item in list
-                    if(movieID.length <=1){
+                    if (movieID.length <= 1) {
                       Navigator.pop(context);
-                    }else{
+                    } else {
                       setState(() {
                         movieID.removeLast();
                         print(movieID.length.toString());
                       });
-                      var id = movieID[movieID.length-1];
+                      var id = movieID[movieID.length - 1];
                       MovieDetailsBloc()..getSimilarMovies(id);
                       MovieDetailsBloc()..init(id);
                     }
@@ -385,12 +391,13 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   }
 
   Widget poster(BuildContext context, MovieModel movie) {
-
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    String imagePath = movie.posterPath == null?'https://www.pngrepo.com/download/34896/movie.png':ApiURL.posterBaseURL+movie.posterPath;
+    String imagePath = movie.posterPath == null
+        ? 'https://www.pngrepo.com/download/34896/movie.png'
+        : ApiURL.posterBaseURL + movie.posterPath;
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         setState(() {
           movieID.add(movie.id);
           print(movieID.length.toString());
@@ -399,7 +406,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
         MovieDetailsBloc()..init(movie.id);
       },
       child: Container(
-        width: width*0.37,
+        width: width * 0.37,
         decoration: BoxDecoration(
           color: Colors.transparent,
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -408,44 +415,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             image: NetworkImage(imagePath),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class MovieCast extends StatelessWidget {
-  final String posterURL;
-  final String name;
-
-  const MovieCast({Key key, this.posterURL, this.name}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 0.15,
-            width: MediaQuery.of(context).size.width * 0.2,
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: NetworkImage(posterURL == null
-                    ? 'https://www.vippng.com/png/full/356-3563630_continue-marketing.png'
-                    : posterURL),
-              ),
-            ),
-          ),
-          Text(
-            name,
-            style: TextStyle(
-              fontSize: 17.0,
-              color: Colors.black,
-            ),
-          )
-        ],
       ),
     );
   }
