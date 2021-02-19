@@ -85,7 +85,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                         height: 10.0,
                                       ),
                                       Text(
-                                        movieDetails.overview,
+                                        movieDetails?.overview,
                                         style: TextStyle(
                                           fontSize: width * 0.04,
                                           color: Colors.black,
@@ -130,7 +130,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                             width: 10.0,
                                           ),
                                           scrollDirection: Axis.horizontal,
-                                          itemCount: movieCast?.cast?.length,
+                                          itemCount: movieCast?.cast == null?0:movieCast?.cast?.length,
                                           itemBuilder: (_, index) {
                                             //print('cast index $index profile path = ${movieCast.cast[index].profilePath}');
                                             return GestureDetector(
@@ -178,7 +178,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                               foregroundDecoration:AppUtils.foreGroundDecoration1,
                                               child: ListView.separated(
                                                   scrollDirection: Axis.horizontal,
-                                                  itemCount: similarMovie.movieList.length,
+                                                  itemCount: similarMovie?.movieList == null?0:similarMovie.movieList.length,
                                                   itemBuilder: (_, index) =>
                                                       Padding(
                                                           padding: const EdgeInsets.all(8.0),

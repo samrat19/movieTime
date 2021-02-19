@@ -20,7 +20,7 @@ class _CastBiographySegmentState extends State<CastBiographySegment> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0),
-      child: RichText(
+      child: widget.person == null?Text(''):RichText(
         text: TextSpan(
             text: readMore?widget.person.biography:widget.person.biography.substring(0, 150),
             style: TextStyle(
