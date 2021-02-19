@@ -22,7 +22,7 @@ class CastGradientImage extends StatelessWidget {
         Hero(
           child: Container(
             width: width,
-            height: height*0.8,
+            height: height*0.75,
             decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.cover,

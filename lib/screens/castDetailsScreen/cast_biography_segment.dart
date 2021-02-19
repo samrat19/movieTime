@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:movitm/logic/model/person_model.dart';
+import '../../logic/model/person_model.dart';
 
 class CastBiographySegment extends StatefulWidget {
 
@@ -42,7 +42,7 @@ class _CastBiographySegmentState extends State<CastBiographySegment> {
                 text: readMore?'...VIEW LESS':'...READ MORE',
                 style: TextStyle(
                   color: Colors.green,
-                  fontSize: 16.0,
+                  fontSize: 18.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
