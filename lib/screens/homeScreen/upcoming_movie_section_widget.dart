@@ -38,7 +38,7 @@ class UpcomingMovieSectionWidget extends StatelessWidget {
           // enlargeCenterPage: true,
         ),
         items: List.generate(
-          movies.length,
+          movies == null?0:movies?.length,
               (index) => Padding(
             padding: const EdgeInsets.only(
               top: 8.0,

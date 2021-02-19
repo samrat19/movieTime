@@ -26,7 +26,7 @@ class MovieSectionWidget extends StatelessWidget {
       ),
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: movies.length,
+        itemCount: movies == null?0:movies?.length,
         itemBuilder: (_, index) => Padding(
           padding: const EdgeInsets.all(8.0),
           child: MoviePosterWidget(
